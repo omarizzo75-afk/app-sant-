@@ -10,944 +10,309 @@
 
   <style>
     :root{
-      /* Palette clinique / pro */
-      --bg-1: #f5f9ff;
-      --bg-2: #edf4ff;
-      --bg-3: #eef2ff;
-
-      --card: rgba(255,255,255,0.92);
-      --card-solid: #ffffff;
-
-      --text: #0f172a;     /* slate-900 */
-      --muted: #475569;    /* slate-600 */
-      --muted-2: #64748b;  /* slate-500 */
-
-      --primary: #2563eb;  /* blue-600 */
-      --primary-2: #1d4ed8;
-      --accent: #4f46e5;   /* indigo-600 */
-
-      --border: rgba(148,163,184,0.35); /* slate-400 */
-      --ring: rgba(37,99,235,0.25);
-
-      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
-      --shadow-md: 0 10px 20px rgba(15, 23, 42, 0.08);
-      --shadow-lg: 0 18px 40px rgba(15, 23, 42, 0.12);
-
-      --radius-lg: 16px;
-      --radius-md: 12px;
-      --radius-sm: 10px;
-
-      --gap-1: 12px;
-      --gap-2: 16px;
-      --gap-3: 24px;
-      --gap-4: 32px;
-
-      --danger-bg: #fef2f2;
-      --danger-border: #fecaca;
-      --danger-text: #991b1b;
-
-      --good-bg: #ecfdf5;
-      --good-border: #bbf7d0;
-      --good-text: #166534;
-
-      --warn-bg: #fffbeb;
-      --warn-border: #fde68a;
-      --warn-text: #92400e;
-
-      --info-bg: #eff6ff;
-      --info-border: #bfdbfe;
-      --info-text: #1e40af;
+      --bg-1:#f5f9ff; --bg-2:#edf4ff; --bg-3:#eef2ff;
+      --card:rgba(255,255,255,.92);
+      --text:#0f172a; --muted:#475569; --muted2:#64748b;
+      --primary:#2563eb; --accent:#4f46e5;
+      --border:rgba(148,163,184,.35);
+      --ring:rgba(37,99,235,.25);
+      --shadow-sm:0 1px 2px rgba(15,23,42,.06);
+      --shadow-md:0 10px 20px rgba(15,23,42,.08);
+      --shadow-lg:0 18px 40px rgba(15,23,42,.12);
+      --r-lg:16px; --r-md:12px;
     }
 
-    *{ margin:0; padding:0; box-sizing:border-box; }
-
+    *{margin:0;padding:0;box-sizing:border-box}
     body{
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-      background: radial-gradient(1000px 600px at 15% 10%, rgba(37,99,235,0.12), transparent 55%),
-                  radial-gradient(900px 500px at 85% 20%, rgba(79,70,229,0.12), transparent 60%),
-                  linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1000px 600px at 15% 10%, rgba(37,99,235,.12), transparent 55%),
+        radial-gradient(900px 500px at 85% 20%, rgba(79,70,229,.12), transparent 60%),
+        linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
       min-height:100vh;
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
 
-    /* ===== Header ===== */
+    /* Header */
     .header{
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: rgba(255,255,255,0.72);
+      position: sticky; top:0; z-index:10;
+      background: rgba(255,255,255,.72);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
       box-shadow: var(--shadow-sm);
     }
-
     .header-content{
-      max-width: 1600px;
-      margin: 0 auto;
+      max-width:1600px; margin:0 auto;
       padding: 14px 24px;
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: var(--gap-2);
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px;
     }
-
-    .logo{
-      display:flex;
-      align-items:center;
-      gap: 12px;
-      min-width: 280px;
-    }
-
+    .logo{display:flex; align-items:center; gap:12px; min-width:260px;}
     .logo-icon{
-      width: 42px;
-      height: 42px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      border-radius: 14px;
-      box-shadow: 0 10px 18px rgba(37, 99, 235, 0.20);
-      border: 1px solid rgba(255,255,255,0.7);
+      width:42px;height:42px;border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      box-shadow: 0 10px 18px rgba(37,99,235,.20);
+      border: 1px solid rgba(255,255,255,.7);
     }
-    .logo-icon i{ color:white; font-size:20px; }
+    .logo-icon i{color:#fff;font-size:20px}
+    .logo-text h1{font-size:16px;font-weight:900;letter-spacing:.2px;line-height:1.1}
+    .logo-text p{font-size:12px;color:var(--muted2);margin-top:2px;font-weight:600}
 
-    .logo-text h1{
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: 0.2px;
-      line-height: 1.1;
+    .header-actions{display:flex;align-items:center;gap:8px}
+    .icon-btn{
+      width:40px;height:40px;border-radius:10px;
+      border:1px solid transparent;background:transparent;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer; transition:.2s;
     }
-    .logo-text p{
-      font-size: 12px;
-      color: var(--muted-2);
-      margin-top: 2px;
-      font-weight: 500;
-    }
+    .icon-btn:hover{background: rgba(37,99,235,.08); border-color: rgba(37,99,235,.15)}
+    .icon-btn:focus-visible{outline:none; box-shadow:0 0 0 4px var(--ring); border-color: rgba(37,99,235,.35)}
+    .icon-btn i{color:#334155;font-size:16px}
 
-    .header-buttons{
-      display:flex;
-      align-items:center;
-      gap: 8px;
-    }
+    /* Container */
+    .container{max-width:1600px;margin:0 auto;padding: 22px 24px 52px;}
 
-    .icon-button{
-      width: 40px;
-      height: 40px;
-      border: 1px solid transparent;
-      background: transparent;
-      border-radius: 10px;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      transition: background .2s, border-color .2s, transform .06s;
-    }
-    .icon-button:hover{
-      background: rgba(37,99,235,0.08);
-      border-color: rgba(37,99,235,0.15);
-    }
-    .icon-button:active{ transform: translateY(1px); }
-    .icon-button:focus-visible{
-      outline: none;
-      box-shadow: 0 0 0 4px var(--ring);
-      border-color: rgba(37,99,235,0.35);
-    }
-    .icon-button i{ color: #334155; font-size: 16px; }
+    /* Top page title */
+    .page-header{margin: 18px 0 18px;}
+    .page-header h2{font-size:34px;font-weight:950;letter-spacing:-.4px;margin-bottom:6px}
+    .page-header p{font-size:15px;color:var(--muted);font-weight:600}
 
-    /* ===== Layout ===== */
-    .container{
-      max-width: 1600px;
-      margin: 0 auto;
-      padding: 28px 24px 52px;
+    /* Professional tab navigation */
+    .tabsbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; margin: 12px 0 18px;
     }
-
-    .page-header{
-      margin: 26px 0 22px;
-    }
-    .page-header h2{
-      font-size: 34px;
-      font-weight: 900;
-      letter-spacing: -0.4px;
-      margin-bottom: 8px;
-    }
-    .page-header p{
-      font-size: 15px;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
-    /* ===== Cards (base) ===== */
-    .card{
-      background: var(--card);
-      backdrop-filter: blur(8px);
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-md);
-    }
-
-    /* Patient info (row style) */
-    .patient-info{
-      padding: 18px 18px;
-      margin-bottom: 18px;
-    }
-
-    .patient-info-grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 14px;
-      align-items: center;
-    }
-
-    .patient-info-item{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.65);
-      border: 1px solid rgba(148,163,184,0.22);
-    }
-
-    .patient-info-item i{
-      width: 34px; height: 34px;
-      display:flex; align-items:center; justify-content:center;
-      border-radius: 12px;
-      background: rgba(37,99,235,0.08);
-      color: var(--primary);
-      font-size: 16px;
-      border: 1px solid rgba(37,99,235,0.14);
-    }
-
-    .patient-info-label{
-      font-size: 11px;
-      color: var(--muted-2);
-      font-weight: 700;
-      letter-spacing: 0.2px;
-      text-transform: uppercase;
-    }
-    .patient-info-value{
-      font-size: 15px;
-      color: var(--text);
-      font-weight: 800;
-      margin-top: 2px;
-    }
-
-    /* Alerts */
-    .alert-box{
-      border-radius: var(--radius-lg);
-      padding: 14px 16px;
-      margin-bottom: 18px;
-      display:flex;
-      align-items:flex-start;
-      gap: 12px;
-      background: linear-gradient(135deg, var(--danger-bg) 0%, rgba(254,226,226,0.7) 100%);
-      border: 1px solid var(--danger-border);
-      box-shadow: var(--shadow-sm);
-    }
-    .alert-icon{
-      width: 34px; height: 34px;
-      border-radius: 12px;
-      display:flex; align-items:center; justify-content:center;
-      background: rgba(220,38,38,0.10);
-      color: #dc2626;
-      border: 1px solid rgba(220,38,38,0.18);
-      font-size: 16px;
-      margin-top: 2px;
-    }
-    .alert-content h4{
-      color: var(--danger-text);
-      font-size: 14px;
-      font-weight: 900;
-      margin-bottom: 2px;
-    }
-    .alert-content p{
-      color: #7f1d1d;
-      font-size: 13px;
-      font-weight: 600;
-      line-height: 1.35;
-    }
-
-    /* Metrics grid (3 cards) */
-    .metrics-grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 14px;
-      margin-bottom: 18px;
-    }
-
-    .metric-card{
-      padding: 18px;
-      transition: transform .12s ease, box-shadow .2s ease;
-    }
-    .metric-card:hover{
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .metric-header{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom: 14px;
-    }
-    .metric-title{
-      font-size: 13px;
-      font-weight: 800;
-      color: #334155;
-      letter-spacing: 0.15px;
-      text-transform: uppercase;
-    }
-
-    .metric-icon{
-      width: 38px; height: 38px;
-      border-radius: 14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border: 1px solid rgba(148,163,184,0.25);
-      box-shadow: var(--shadow-sm);
-    }
-    .metric-icon i{ font-size: 15px; }
-
-    .metric-value{
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: -0.3px;
-      margin-bottom: 2px;
-    }
-    .metric-unit{
-      font-size: 12px;
-      color: var(--muted-2);
-      margin-bottom: 12px;
-      font-weight: 600;
-    }
-
-    /* Progress */
-    .progress-bar{
-      width:100%;
-      height: 10px;
-      background: rgba(148,163,184,0.25);
-      border-radius: 999px;
-      overflow:hidden;
-      border: 1px solid rgba(148,163,184,0.20);
-      margin-bottom: 8px;
-    }
-    .progress-fill{
-      height:100%;
-      border-radius: 999px;
-      transition: width .25s ease;
-    }
-    .progress-text{
-      font-size: 11px;
-      color: var(--muted-2);
-      font-weight: 700;
-    }
-
-    /* Vital signs section */
-    .vital-signs-card{
-      padding: 22px;
-      margin-bottom: 18px;
-    }
-
-    .vital-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom: 18px;
-      gap: 12px;
-    }
-
-    .vital-header-text h3{
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: -0.2px;
-      margin-bottom: 4px;
-    }
-    .vital-header-text p{
-      font-size: 13px;
-      color: var(--muted-2);
-      font-weight: 600;
-    }
-
-    .vital-header-icon{
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      border: 1px solid rgba(255,255,255,0.7);
-      box-shadow: 0 14px 26px rgba(37, 99, 235, 0.18);
-      flex: 0 0 auto;
-    }
-    .vital-header-icon i{ color: white; font-size: 22px; }
-
-    .vital-grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 14px;
-    }
-
-    .vital-item{
-      background: var(--card-solid);
-      border: 1px solid rgba(148,163,184,0.32);
-      border-radius: var(--radius-lg);
-      padding: 18px;
-      transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease;
-      cursor: pointer;
-      box-shadow: var(--shadow-sm);
-    }
-    .vital-item:hover{
-      transform: translateY(-1px);
-      border-color: rgba(37,99,235,0.35);
-      box-shadow: var(--shadow-md);
-    }
-    .vital-item:focus-within{
-      box-shadow: 0 0 0 4px var(--ring), var(--shadow-md);
-      border-color: rgba(37,99,235,0.45);
-      outline: none;
-    }
-
-    .vital-item-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom: 12px;
-      gap: 10px;
-    }
-
-    .vital-item-icon{
-      width: 42px; height: 42px;
-      border-radius: 14px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: rgba(37,99,235,0.08);
-      border: 1px solid rgba(37,99,235,0.14);
-    }
-    .vital-item-icon i{ font-size: 18px; }
-
-    .badge{
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 800;
-      border: 1px solid;
-      letter-spacing: 0.1px;
-      white-space: nowrap;
-    }
-    .badge-normal{ background: var(--info-bg); border-color: var(--info-border); color: var(--info-text); }
-    .badge-good{ background: var(--good-bg); border-color: var(--good-border); color: var(--good-text); }
-    .badge-warning{ background: var(--warn-bg); border-color: var(--warn-border); color: var(--warn-text); }
-
-    .vital-item-label{
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--muted);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.15px;
-    }
-    .vital-item-value{
-      font-size: 32px;
-      font-weight: 900;
-      letter-spacing: -0.3px;
-      margin-bottom: 6px;
-    }
-    .vital-item-date{
-      font-size: 11px;
-      color: var(--muted-2);
-      font-weight: 650;
-      line-height: 1.25;
-    }
-
-    /* Bottom area */
-    .three-column-grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-      gap: 18px;
-      margin-bottom: 18px;
-    }
-
-    .card-inner{
-      padding: 18px;
-    }
-
-    .card-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom: 14px;
-    }
-    .card-title{
-      font-size: 16px;
-      font-weight: 900;
-      letter-spacing: -0.1px;
-    }
-
-    /* Tabs */
     .tabs{
-      display:flex;
-      gap: 8px;
-      background: rgba(37,99,235,0.08);
-      padding: 6px;
-      border-radius: 12px;
-      border: 1px solid rgba(37,99,235,0.12);
-      margin-bottom: 14px;
+      display:flex; gap:8px;
+      background: rgba(37,99,235,.08);
+      border:1px solid rgba(37,99,235,.12);
+      padding:6px; border-radius: 14px;
     }
     .tab{
-      padding: 8px 12px;
-      border: 1px solid transparent;
+      display:flex; align-items:center; gap:10px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border:1px solid transparent;
       background: transparent;
-      color: #334155;
-      border-radius: 10px;
+      color:#334155;
       cursor:pointer;
+      font-weight:900;
       font-size: 13px;
-      font-weight: 800;
-      transition: background .2s, color .2s, border-color .2s;
+      letter-spacing:.1px;
+      transition:.2s;
+      white-space:nowrap;
     }
-    .tab:hover{ background: rgba(255,255,255,0.55); border-color: rgba(148,163,184,0.22); }
-    .tab.active{
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      color: white;
-      border-color: rgba(255,255,255,0.45);
-      box-shadow: 0 10px 18px rgba(37, 99, 235, 0.18);
+    .tab i{font-size:14px; opacity:.9}
+    .tab:hover{background: rgba(255,255,255,.55); border-color: rgba(148,163,184,.22)}
+    .tab[aria-selected="true"]{
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color:#fff;
+      border-color: rgba(255,255,255,.45);
+      box-shadow: 0 10px 18px rgba(37,99,235,.18);
     }
-    .tab:focus-visible{
-      outline:none;
-      box-shadow: 0 0 0 4px var(--ring);
+    .tab:focus-visible{outline:none; box-shadow:0 0 0 4px var(--ring)}
+
+    .hint{
+      color: var(--muted2);
+      font-size: 12px;
+      font-weight: 700;
     }
 
-    .tab-content{ display:none; }
-    .tab-content.active{ display:block; }
+    /* Pages */
+    .page{
+      display:none;
+      border-radius: var(--r-lg);
+      background: var(--card);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      padding: 18px;
+    }
+    .page.active{display:block; animation: fadeIn .22s ease}
+    @keyframes fadeIn{
+      from{opacity:0; transform: translateY(6px)}
+      to{opacity:1; transform: translateY(0)}
+    }
 
-    .chart-container{
-      height: 310px;
-      position: relative;
-      background: rgba(255,255,255,0.55);
-      border: 1px solid rgba(148,163,184,0.22);
+    /* Small helpers to keep it clean */
+    .grid-3{display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px}
+    .mini-card{
+      background: rgba(255,255,255,.8);
+      border:1px solid rgba(148,163,184,.22);
       border-radius: 14px;
-      padding: 10px;
+      padding: 14px;
+      box-shadow: var(--shadow-sm);
     }
+    .mini-title{font-size:12px; font-weight:900; letter-spacing:.12px; text-transform:uppercase; color:#334155}
+    .mini-value{font-size:28px; font-weight:950; margin-top:10px}
+    .mini-sub{font-size:12px; color:var(--muted2); font-weight:700; margin-top:2px}
 
     /* Responsive */
-    @media (max-width: 980px){
-      .page-header h2{ font-size: 28px; }
-      .three-column-grid{ grid-template-columns: 1fr; }
-    }
-    @media (max-width: 768px){
-      .metrics-grid, .vital-grid{ grid-template-columns: 1fr; }
-      .logo{ min-width: auto; }
+    @media (max-width: 900px){
+      .tabsbar{flex-direction:column; align-items:flex-start}
+      .page-header h2{font-size:28px}
+      .logo{min-width:auto}
     }
   </style>
 </head>
 
 <body>
-  <!-- Header -->
+  <!-- HEADER -->
   <header class="header">
     <div class="header-content">
       <div class="logo">
-        <div class="logo-icon">
-          <i class="fas fa-heartbeat"></i>
-        </div>
+        <div class="logo-icon"><i class="fas fa-heartbeat"></i></div>
         <div class="logo-text">
           <h1>Santé+</h1>
           <p>Plateforme de santé professionnelle</p>
         </div>
       </div>
 
-      <div class="header-buttons">
-        <button class="icon-button" aria-label="Notifications">
-          <i class="fas fa-bell"></i>
-        </button>
-        <button class="icon-button" aria-label="Paramètres">
-          <i class="fas fa-cog"></i>
-        </button>
-        <button class="icon-button" aria-label="Profil">
-          <i class="fas fa-user"></i>
-        </button>
+      <div class="header-actions">
+        <button class="icon-btn" aria-label="Notifications"><i class="fas fa-bell"></i></button>
+        <button class="icon-btn" aria-label="Paramètres"><i class="fas fa-cog"></i></button>
+        <button class="icon-btn" aria-label="Profil"><i class="fas fa-user"></i></button>
       </div>
     </div>
   </header>
 
-  <!-- Main Content -->
   <main class="container">
     <div class="page-header">
       <h2>Bonjour, Dr. Victor Mouhammad 👋</h2>
       <p>Dossier médical complet - Mardi 14 Janvier 2026</p>
     </div>
 
-    <!-- Patient Information -->
-    <div class="card patient-info">
-      <div class="patient-info-grid">
-        <div class="patient-info-item">
-          <i class="fas fa-user-circle"></i>
-          <div>
-            <div class="patient-info-label">Patient</div>
-            <div class="patient-info-value">Marie Dubois</div>
-          </div>
-        </div>
-
-        <div class="patient-info-item">
-          <i class="fas fa-birthday-cake"></i>
-          <div>
-            <div class="patient-info-label">Âge</div>
-            <div class="patient-info-value">42 ans</div>
-          </div>
-        </div>
-
-        <div class="patient-info-item">
-          <i class="fas fa-venus"></i>
-          <div>
-            <div class="patient-info-label">Sexe</div>
-            <div class="patient-info-value">Féminin</div>
-          </div>
-        </div>
-
-        <div class="patient-info-item">
-          <i class="fas fa-tint"></i>
-          <div>
-            <div class="patient-info-label">Groupe sanguin</div>
-            <div class="patient-info-value">A+</div>
-          </div>
-        </div>
-
-        <div class="patient-info-item">
-          <i class="fas fa-ruler-vertical"></i>
-          <div>
-            <div class="patient-info-label">Taille</div>
-            <div class="patient-info-value">168 cm</div>
-          </div>
-        </div>
-
-        <div class="patient-info-item">
-          <i class="fas fa-calculator"></i>
-          <div>
-            <div class="patient-info-label">IMC</div>
-            <div class="patient-info-value">25.7</div>
-          </div>
-        </div>
+    <!-- PROFESSIONAL NAVIGATION -->
+    <div class="tabsbar">
+      <div class="tabs" role="tablist" aria-label="Navigation">
+        <button class="tab" role="tab" data-page="dashboard" aria-selected="true">
+          <i class="fas fa-chart-pie"></i> Dashboard
+        </button>
+        <button class="tab" role="tab" data-page="patients" aria-selected="false">
+          <i class="fas fa-user-injured"></i> Patients
+        </button>
+        <button class="tab" role="tab" data-page="capteurs" aria-selected="false">
+          <i class="fas fa-wave-square"></i> Capteurs
+        </button>
+        <button class="tab" role="tab" data-page="rapports" aria-selected="false">
+          <i class="fas fa-file-medical"></i> Rapports
+        </button>
+        <button class="tab" role="tab" data-page="settings" aria-selected="false">
+          <i class="fas fa-sliders"></i> Paramètres
+        </button>
       </div>
+
+      <div class="hint" id="hint">Astuce : utilise aussi les touches ← →</div>
     </div>
 
-    <!-- Alert Box -->
-    <div class="alert-box" role="alert" aria-live="polite">
-      <div class="alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
-      <div class="alert-content">
-        <h4>Rappel important</h4>
-        <p>Prochain bilan sanguin prévu dans 5 jours - Jeudi 19 Janvier 2026 à 08:00</p>
-      </div>
-    </div>
-
-    <!-- Health Metrics -->
-    <div class="metrics-grid">
-      <div class="card metric-card">
-        <div class="metric-header">
-          <span class="metric-title">Fréquence cardiaque</span>
-          <div class="metric-icon" style="background: rgba(220,38,38,0.08); border-color: rgba(220,38,38,0.18);">
-            <i class="fas fa-heart" style="color:#dc2626;"></i>
-          </div>
+    <!-- PAGES (ALL IN ONE HTML FILE) -->
+    <section id="page-dashboard" class="page active" role="tabpanel" aria-label="Dashboard">
+      <!-- ✅ Ici tu colles ton dashboard Santé+ actuel -->
+      <div class="grid-3">
+        <div class="mini-card">
+          <div class="mini-title">Fréquence cardiaque</div>
+          <div class="mini-value">72</div>
+          <div class="mini-sub">bpm (au repos)</div>
         </div>
-        <div class="metric-value">72</div>
-        <div class="metric-unit">bpm (au repos)</div>
-      </div>
-
-      <div class="card metric-card">
-        <div class="metric-header">
-          <span class="metric-title">Hydratation</span>
-          <div class="metric-icon" style="background: rgba(8,145,178,0.08); border-color: rgba(8,145,178,0.18);">
-            <i class="fas fa-glass-water" style="color:#0891b2;"></i>
-          </div>
+        <div class="mini-card">
+          <div class="mini-title">Hydratation</div>
+          <div class="mini-value">1.8L</div>
+          <div class="mini-sub">Objectif 2.5L</div>
         </div>
-        <div class="metric-value">1.8L</div>
-        <div class="metric-unit">eau consommée</div>
-
-        <div class="progress-bar" aria-label="Progression hydratation">
-          <div class="progress-fill" style="width:72%; background: linear-gradient(90deg, #06b6d4 0%, #0891b2 100%);"></div>
-        </div>
-        <div class="progress-text">Objectif: 2.5L</div>
-      </div>
-
-      <div class="card metric-card">
-        <div class="metric-header">
-          <span class="metric-title">Variabilité cardiaque</span>
-          <div class="metric-icon" style="background: rgba(22,163,74,0.08); border-color: rgba(22,163,74,0.18);">
-            <i class="fas fa-chart-line" style="color:#16a34a;"></i>
-          </div>
-        </div>
-        <div class="metric-value">58 ms</div>
-        <div class="metric-unit">HRV moyen</div>
-      </div>
-    </div>
-
-    <!-- Vital Signs -->
-    <section class="card vital-signs-card" aria-label="Signes vitaux">
-      <div class="vital-header">
-        <div class="vital-header-text">
-          <h3>Signes vitaux</h3>
-          <p>Surveillance en temps réel des paramètres critiques</p>
-        </div>
-        <div class="vital-header-icon" aria-hidden="true">
-          <i class="fas fa-heartbeat"></i>
-        </div>
-      </div>
-
-      <div class="vital-grid">
-        <div class="vital-item" tabindex="0">
-          <div class="vital-item-header">
-            <div class="vital-item-icon"><i class="fas fa-tint" style="color:#2563eb;"></i></div>
-            <span class="badge badge-normal">Normal</span>
-          </div>
-          <div class="vital-item-label">Pression artérielle</div>
-          <div class="vital-item-value">120/80</div>
-          <div class="vital-item-date">Aujourd'hui, 08:30 • Assis, bras gauche</div>
-        </div>
-
-        <div class="vital-item" tabindex="0">
-          <div class="vital-item-header">
-            <div class="vital-item-icon"><i class="fas fa-thermometer-half" style="color:#dc2626;"></i></div>
-            <span class="badge badge-normal">Normal</span>
-          </div>
-          <div class="vital-item-label">Température corporelle</div>
-          <div class="vital-item-value">36.8°C</div>
-          <div class="vital-item-date">Aujourd'hui, 08:30 • Oral</div>
-        </div>
-
-        <div class="vital-item" tabindex="0">
-          <div class="vital-item-header">
-            <div class="vital-item-icon"><i class="fas fa-wind" style="color:#059669;"></i></div>
-            <span class="badge badge-good">Excellent</span>
-          </div>
-          <div class="vital-item-label">Saturation en oxygène</div>
-          <div class="vital-item-value">98%</div>
-          <div class="vital-item-date">Aujourd'hui, 08:30 • SpO₂</div>
-        </div>
-
-        <div class="vital-item" tabindex="0">
-          <div class="vital-item-header">
-            <div class="vital-item-icon"><i class="fas fa-weight" style="color:#7c3aed;"></i></div>
-            <span class="badge badge-normal">Normal</span>
-          </div>
-          <div class="vital-item-label">Poids</div>
-          <div class="vital-item-value">72.5 kg</div>
-          <div class="vital-item-date">Hier, 07:00 • Balance digitale</div>
-        </div>
-
-        <div class="vital-item" tabindex="0">
-          <div class="vital-item-header">
-            <div class="vital-item-icon"><i class="fas fa-lungs" style="color:#0891b2;"></i></div>
-            <span class="badge badge-normal">Normal</span>
-          </div>
-          <div class="vital-item-label">Fréquence respiratoire</div>
-          <div class="vital-item-value">16 /min</div>
-          <div class="vital-item-date">Aujourd'hui, 08:30 • Au repos</div>
-        </div>
-
-        <div class="vital-item" tabindex="0">
-          <div class="vital-item-header">
-            <div class="vital-item-icon"><i class="fas fa-droplet" style="color:#f59e0b;"></i></div>
-            <span class="badge badge-warning">À surveiller</span>
-          </div>
-          <div class="vital-item-label">Glycémie</div>
-          <div class="vital-item-value">5.8 mmol/L</div>
-          <div class="vital-item-date">Aujourd'hui, 08:30 • À jeun</div>
+        <div class="mini-card">
+          <div class="mini-title">Variabilité cardiaque</div>
+          <div class="mini-value">58 ms</div>
+          <div class="mini-sub">HRV moyen</div>
         </div>
       </div>
     </section>
 
-    <!-- Bottom Grid -->
-    <div class="three-column-grid">
-      <!-- Activity Chart -->
-      <div class="card">
-        <div class="card-inner">
-          <div class="card-header">
-            <h3 class="card-title">Activité et tendances</h3>
-          </div>
+    <section id="page-patients" class="page" role="tabpanel" aria-label="Patients">
+      <h3 style="font-size:18px;font-weight:950;margin-bottom:10px;">Patients</h3>
+      <p style="color:#475569;font-weight:650;">Ici tu peux ajouter la liste des patients, recherche, etc.</p>
+    </section>
 
-          <div class="tabs" role="tablist" aria-label="Choix des courbes">
-            <button class="tab active" role="tab" aria-selected="true" aria-controls="heartrate-tab" onclick="switchTab('heartrate', event)">
-              Fréquence cardiaque
-            </button>
-            <button class="tab" role="tab" aria-selected="false" aria-controls="glucose-tab" onclick="switchTab('glucose', event)">
-              Glycémie
-            </button>
-          </div>
-
-          <div id="heartrate-tab" class="tab-content active" role="tabpanel">
-            <div class="chart-container">
-              <canvas id="heartrateChart"></canvas>
-            </div>
-          </div>
-
-          <div id="glucose-tab" class="tab-content" role="tabpanel">
-            <div class="chart-container">
-              <canvas id="glucoseChart"></canvas>
-            </div>
-          </div>
+    <section id="page-capteurs" class="page" role="tabpanel" aria-label="Capteurs">
+      <h3 style="font-size:18px;font-weight:950;margin-bottom:10px;">Capteurs</h3>
+      <p style="color:#475569;font-weight:650;">
+        Ici tu peux afficher les valeurs temps réel (ex : SpO₂, BPM, présence PIR…).
+      </p>
+      <div style="margin-top:14px" class="grid-3">
+        <div class="mini-card">
+          <div class="mini-title">MAX30102</div>
+          <div class="mini-value">—</div>
+          <div class="mini-sub">SpO₂ / BPM</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-title">PIR</div>
+          <div class="mini-value">—</div>
+          <div class="mini-sub">Présence</div>
+        </div>
+        <div class="mini-card">
+          <div class="mini-title">Échantillonnage</div>
+          <div class="mini-value">400 Hz</div>
+          <div class="mini-sub">Données brutes</div>
         </div>
       </div>
+    </section>
 
-      <!-- Blood Pressure Trend -->
-      <div class="card">
-        <div class="card-inner">
-          <div class="card-header">
-            <h3 class="card-title">Évolution pression artérielle</h3>
-          </div>
-          <div class="chart-container">
-            <canvas id="bpChart"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
+    <section id="page-rapports" class="page" role="tabpanel" aria-label="Rapports">
+      <h3 style="font-size:18px;font-weight:950;margin-bottom:10px;">Rapports</h3>
+      <p style="color:#475569;font-weight:650;">Ici tu peux mettre les PDF, historiques, exports…</p>
+    </section>
+
+    <section id="page-settings" class="page" role="tabpanel" aria-label="Paramètres">
+      <h3 style="font-size:18px;font-weight:950;margin-bottom:10px;">Paramètres</h3>
+      <p style="color:#475569;font-weight:650;">Ici tu peux mettre la configuration (alertes, seuils, compte, etc.).</p>
+    </section>
   </main>
 
   <script>
-    function switchTab(tabName, ev) {
-      const tabs = document.querySelectorAll('.tab');
-      tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
-      ev.target.classList.add('active');
-      ev.target.setAttribute('aria-selected','true');
+    const tabs = Array.from(document.querySelectorAll('.tab'));
+    const pages = Array.from(document.querySelectorAll('.page'));
 
-      const contents = document.querySelectorAll('.tab-content');
-      contents.forEach(c => c.classList.remove('active'));
-      document.getElementById(tabName + '-tab').classList.add('active');
+    function setActive(pageName, pushHash = true){
+      // pages
+      pages.forEach(p => p.classList.toggle('active', p.id === 'page-' + pageName));
+
+      // tabs + aria
+      tabs.forEach(t => {
+        const isActive = t.dataset.page === pageName;
+        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      if (pushHash) {
+        history.replaceState(null, '', '#' + pageName);
+      }
     }
 
-    // Data (démo)
-    const weeklyData = {
-      labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
-      heartRate: [68, 72, 70, 75, 71, 73, 72],
-      glucose: [5.6, 6.1, 5.8, 6.3, 5.9, 6.0, 5.8]
-    };
-
-    const bpData = {
-      labels: ['05 Jan', '08 Jan', '10 Jan', '12 Jan', '14 Jan'],
-      systolic: [118, 122, 120, 119, 120],
-      diastolic: [78, 82, 80, 79, 80]
-    };
-
-    // Chart.js options (sobres et lisibles)
-    const baseLineOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: { enabled: true }
-      },
-      scales: {
-        x: {
-          grid: { color: 'rgba(148,163,184,0.25)' },
-          ticks: { color: '#475569', font: { weight: '600' } }
-        },
-        y: {
-          grid: { color: 'rgba(148,163,184,0.25)' },
-          ticks: { color: '#475569', font: { weight: '600' } }
-        }
-      }
-    };
-
-    // Heart Rate Chart
-    const heartrateCtx = document.getElementById('heartrateChart').getContext('2d');
-    new Chart(heartrateCtx, {
-      type: 'line',
-      data: {
-        labels: weeklyData.labels,
-        datasets: [{
-          label: 'BPM',
-          data: weeklyData.heartRate,
-          borderColor: '#dc2626',
-          backgroundColor: 'rgba(220, 38, 38, 0.08)',
-          fill: true,
-          tension: 0.35,
-          borderWidth: 2,
-          pointRadius: 3,
-          pointHoverRadius: 4
-        }]
-      },
-      options: {
-        ...baseLineOptions,
-        scales: {
-          ...baseLineOptions.scales,
-          y: { ...baseLineOptions.scales.y, min: 60, max: 80 }
-        }
-      }
+    // Click navigation
+    tabs.forEach(t => {
+      t.addEventListener('click', () => setActive(t.dataset.page));
     });
 
-    // Glucose Chart
-    const glucoseCtx = document.getElementById('glucoseChart').getContext('2d');
-    new Chart(glucoseCtx, {
-      type: 'line',
-      data: {
-        labels: weeklyData.labels,
-        datasets: [{
-          label: 'Glycémie (mmol/L)',
-          data: weeklyData.glucose,
-          borderColor: '#f59e0b',
-          backgroundColor: 'rgba(245, 158, 11, 0.12)',
-          fill: true,
-          tension: 0.35,
-          borderWidth: 2,
-          pointRadius: 3,
-          pointHoverRadius: 4
-        }]
-      },
-      options: {
-        ...baseLineOptions,
-        scales: {
-          ...baseLineOptions.scales,
-          y: { ...baseLineOptions.scales.y, min: 4, max: 8 }
-        }
-      }
+    // Keyboard navigation ← →
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+
+      const current = tabs.findIndex(t => t.getAttribute('aria-selected') === 'true');
+      if (current < 0) return;
+
+      const next = (e.key === 'ArrowRight')
+        ? (current + 1) % tabs.length
+        : (current - 1 + tabs.length) % tabs.length;
+
+      tabs[next].focus();
+      setActive(tabs[next].dataset.page);
     });
 
-    // Blood Pressure Chart
-    const bpCtx = document.getElementById('bpChart').getContext('2d');
-    new Chart(bpCtx, {
-      type: 'line',
-      data: {
-        labels: bpData.labels,
-        datasets: [
-          {
-            label: 'Systolique',
-            data: bpData.systolic,
-            borderColor: '#dc2626',
-            backgroundColor: 'rgba(220, 38, 38, 0.06)',
-            fill: true,
-            tension: 0.35,
-            borderWidth: 2,
-            pointRadius: 3,
-            pointHoverRadius: 4
-          },
-          {
-            label: 'Diastolique',
-            data: bpData.diastolic,
-            borderColor: '#2563eb',
-            backgroundColor: 'rgba(37, 99, 235, 0.06)',
-            fill: true,
-            tension: 0.35,
-            borderWidth: 2,
-            pointRadius: 3,
-            pointHoverRadius: 4
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: true,
-            position: 'bottom',
-            labels: { color: '#334155', font: { weight: '700' } }
-          }
-        },
-        scales: baseLineOptions.scales
-      }
-    });
+    // Load from hash (#dashboard etc.)
+    const initial = (location.hash || '#dashboard').replace('#','');
+    const exists = pages.some(p => p.id === 'page-' + initial);
+    setActive(exists ? initial : 'dashboard', false);
   </script>
 </body>
 </html>
+
