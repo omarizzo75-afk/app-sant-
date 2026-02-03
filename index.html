@@ -80,18 +80,46 @@
     .page-header h2{font-size:34px;font-weight:950;letter-spacing:-.4px;margin-bottom:6px}
     .page-header p{font-size:15px;color:var(--muted);font-weight:600}
 
-    /* Professional tab navigation */
+    /* Tabs bar */
     .tabsbar{
       display:flex; align-items:center; justify-content:space-between;
       gap:12px; margin: 12px 0 18px;
     }
+    .hint{
+      color: var(--muted2);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* ===== Tabs pro + indicateur ===== */
     .tabs{
-      display:flex; gap:8px;
+      position: relative;
+      display:flex; gap:6px;
       background: rgba(37,99,235,.08);
       border:1px solid rgba(37,99,235,.12);
-      padding:6px; border-radius: 14px;
+      padding:6px;
+      border-radius: 14px;
+      overflow: hidden;
     }
+
+    /* Indicateur animé derrière l’onglet actif */
+    .tab-indicator{
+      position:absolute;
+      top:6px;
+      left:6px;
+      height: calc(100% - 12px);
+      width: 120px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      box-shadow: 0 10px 18px rgba(37,99,235,.18);
+      transition: transform .22s ease, width .22s ease;
+      z-index: 0;
+    }
+
+    /* Les boutons passent au-dessus de l’indicateur */
     .tab{
+      position: relative;
+      z-index: 1;
       display:flex; align-items:center; gap:10px;
       padding: 10px 14px;
       border-radius: 12px;
@@ -102,26 +130,25 @@
       font-weight:900;
       font-size: 13px;
       letter-spacing:.1px;
-      transition:.2s;
+      transition: color .2s, background .2s, border-color .2s;
       white-space:nowrap;
+      user-select:none;
     }
     .tab i{font-size:14px; opacity:.9}
-    .tab:hover{background: rgba(255,255,255,.55); border-color: rgba(148,163,184,.22)}
+
+    .tab:hover{
+      background: rgba(255,255,255,.55);
+      border-color: rgba(148,163,184,.22);
+    }
     .tab[aria-selected="true"]{
-      background: linear-gradient(135deg, var(--primary), var(--accent));
       color:#fff;
-      border-color: rgba(255,255,255,.45);
-      box-shadow: 0 10px 18px rgba(37,99,235,.18);
     }
-    .tab:focus-visible{outline:none; box-shadow:0 0 0 4px var(--ring)}
-
-    .hint{
-      color: var(--muted2);
-      font-size: 12px;
-      font-weight: 700;
+    .tab:focus-visible{
+      outline:none;
+      box-shadow:0 0 0 4px var(--ring);
     }
 
-    /* Pages */
+    /* Pages : transition plus “app” */
     .page{
       display:none;
       border-radius: var(--r-lg);
@@ -129,14 +156,18 @@
       border: 1px solid var(--border);
       box-shadow: var(--shadow-md);
       padding: 18px;
+      opacity: 0;
+      transform: translateY(10px);
     }
-    .page.active{display:block; animation: fadeIn .22s ease}
-    @keyframes fadeIn{
-      from{opacity:0; transform: translateY(6px)}
-      to{opacity:1; transform: translateY(0)}
+    .page.active{
+      display:block;
+      animation: pageIn .22s ease forwards;
+    }
+    @keyframes pageIn{
+      to{ opacity:1; transform: translateY(0); }
     }
 
-    /* Small helpers to keep it clean */
+    /* Small helpers */
     .grid-3{display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px}
     .mini-card{
       background: rgba(255,255,255,.8);
@@ -149,7 +180,6 @@
     .mini-value{font-size:28px; font-weight:950; margin-top:10px}
     .mini-sub{font-size:12px; color:var(--muted2); font-weight:700; margin-top:2px}
 
-    /* Responsive */
     @media (max-width: 900px){
       .tabsbar{flex-direction:column; align-items:flex-start}
       .page-header h2{font-size:28px}
@@ -184,32 +214,33 @@
       <p>Dossier médical complet - Mardi 14 Janvier 2026</p>
     </div>
 
-    <!-- PROFESSIONAL NAVIGATION -->
+    <!-- NAVIGATION PRO -->
     <div class="tabsbar">
       <div class="tabs" role="tablist" aria-label="Navigation">
-        <button class="tab" role="tab" data-page="dashboard" aria-selected="true">
+        <div class="tab-indicator" id="tabIndicator" aria-hidden="true"></div>
+
+        <button class="tab" role="tab" data-page="dashboard" aria-selected="true" aria-controls="page-dashboard">
           <i class="fas fa-chart-pie"></i> Dashboard
         </button>
-        <button class="tab" role="tab" data-page="patients" aria-selected="false">
+        <button class="tab" role="tab" data-page="patients" aria-selected="false" aria-controls="page-patients">
           <i class="fas fa-user-injured"></i> Patients
         </button>
-        <button class="tab" role="tab" data-page="capteurs" aria-selected="false">
+        <button class="tab" role="tab" data-page="capteurs" aria-selected="false" aria-controls="page-capteurs">
           <i class="fas fa-wave-square"></i> Capteurs
         </button>
-        <button class="tab" role="tab" data-page="rapports" aria-selected="false">
+        <button class="tab" role="tab" data-page="rapports" aria-selected="false" aria-controls="page-rapports">
           <i class="fas fa-file-medical"></i> Rapports
         </button>
-        <button class="tab" role="tab" data-page="settings" aria-selected="false">
+        <button class="tab" role="tab" data-page="settings" aria-selected="false" aria-controls="page-settings">
           <i class="fas fa-sliders"></i> Paramètres
         </button>
       </div>
 
-      <div class="hint" id="hint">Astuce : utilise aussi les touches ← →</div>
+      <div class="hint" id="hint">Astuce : utilise aussi les touches ← → (Enter/Espace)</div>
     </div>
 
-    <!-- PAGES (ALL IN ONE HTML FILE) -->
+    <!-- PAGES -->
     <section id="page-dashboard" class="page active" role="tabpanel" aria-label="Dashboard">
-      <!-- ✅ Ici tu colles ton dashboard Santé+ actuel -->
       <div class="grid-3">
         <div class="mini-card">
           <div class="mini-title">Fréquence cardiaque</div>
@@ -272,6 +303,22 @@
   <script>
     const tabs = Array.from(document.querySelectorAll('.tab'));
     const pages = Array.from(document.querySelectorAll('.page'));
+    const indicator = document.getElementById('tabIndicator');
+
+    function getActiveTab(){
+      return tabs.find(t => t.getAttribute('aria-selected') === 'true') || tabs[0];
+    }
+
+    function moveIndicatorTo(tabEl){
+      // position relative à .tabs
+      const tabsWrap = tabEl.parentElement;
+      const tabRect = tabEl.getBoundingClientRect();
+      const wrapRect = tabsWrap.getBoundingClientRect();
+
+      const left = tabRect.left - wrapRect.left;
+      indicator.style.width = tabRect.width + 'px';
+      indicator.style.transform = 'translateX(' + left + 'px)';
+    }
 
     function setActive(pageName, pushHash = true){
       // pages
@@ -283,14 +330,23 @@
         t.setAttribute('aria-selected', isActive ? 'true' : 'false');
       });
 
-      if (pushHash) {
-        history.replaceState(null, '', '#' + pageName);
-      }
+      // indicator
+      const activeTab = tabs.find(t => t.dataset.page === pageName);
+      if (activeTab) moveIndicatorTo(activeTab);
+
+      // URL hash
+      if (pushHash) history.replaceState(null, '', '#' + pageName);
     }
 
     // Click navigation
     tabs.forEach(t => {
       t.addEventListener('click', () => setActive(t.dataset.page));
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          setActive(t.dataset.page);
+        }
+      });
     });
 
     // Keyboard navigation ← →
@@ -308,11 +364,18 @@
       setActive(tabs[next].dataset.page);
     });
 
-    // Load from hash (#dashboard etc.)
-    const initial = (location.hash || '#dashboard').replace('#','');
-    const exists = pages.some(p => p.id === 'page-' + initial);
-    setActive(exists ? initial : 'dashboard', false);
+    // Initial load from hash
+    function init(){
+      const initial = (location.hash || '#dashboard').replace('#','');
+      const exists = pages.some(p => p.id === 'page-' + initial);
+      setActive(exists ? initial : 'dashboard', false);
+
+      // Ensure indicator placed after layout
+      requestAnimationFrame(() => moveIndicatorTo(getActiveTab()));
+      window.addEventListener('resize', () => moveIndicatorTo(getActiveTab()));
+    }
+
+    init();
   </script>
 </body>
 </html>
-
