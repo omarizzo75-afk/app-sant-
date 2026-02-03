@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,9 +9,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
+    /* =========================================================
+      THEME TOKENS
+      - light is default
+      - dark is applied by: <html data-theme="dark">
+    ========================================================= */
     :root{
       --bg-1:#f5f9ff; --bg-2:#edf4ff; --bg-3:#eef2ff;
       --card:rgba(255,255,255,.92);
+      --cardSolid:#ffffff;
       --text:#0f172a; --muted:#475569; --muted2:#64748b;
       --primary:#2563eb; --accent:#4f46e5;
       --border:rgba(148,163,184,.35);
@@ -19,10 +25,37 @@
       --shadow-sm:0 1px 2px rgba(15,23,42,.06);
       --shadow-md:0 10px 20px rgba(15,23,42,.08);
       --r-lg:16px;
+
       --good-bg:#ecfdf5; --good-bd:#bbf7d0; --good-tx:#166534;
       --warn-bg:#fffbeb; --warn-bd:#fde68a; --warn-tx:#92400e;
       --bad-bg:#fef2f2;  --bad-bd:#fecaca;  --bad-tx:#991b1b;
       --info-bg:#eff6ff; --info-bd:#bfdbfe; --info-tx:#1e40af;
+
+      --tabBg: rgba(37,99,235,.08);
+      --tabBd: rgba(37,99,235,.12);
+      --cardBd: rgba(148,163,184,.22);
+      --tableHeadBg: rgba(37,99,235,.06);
+      --rowHover: rgba(37,99,235,.05);
+      --icon: #334155;
+      --headerBg: rgba(255,255,255,.72);
+    }
+
+    html[data-theme="dark"]{
+      --bg-1:#0b1220; --bg-2:#0b1220; --bg-3:#0f172a;
+      --card: rgba(17,24,39,.72);
+      --cardSolid:#111827;
+      --text:#e5e7eb; --muted:#cbd5e1; --muted2:#94a3b8;
+      --border: rgba(148,163,184,.18);
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.35);
+      --shadow-md: 0 16px 30px rgba(0,0,0,.35);
+
+      --tabBg: rgba(255,255,255,.06);
+      --tabBd: rgba(255,255,255,.10);
+      --cardBd: rgba(255,255,255,.10);
+      --tableHeadBg: rgba(255,255,255,.06);
+      --rowHover: rgba(255,255,255,.05);
+      --icon: #cbd5e1;
+      --headerBg: rgba(17,24,39,.72);
     }
 
     *{margin:0;padding:0;box-sizing:border-box}
@@ -38,12 +71,13 @@
       -moz-osx-font-smoothing:grayscale;
     }
 
+    /* Header */
     .header{
       position: sticky; top:0; z-index:10;
-      background: rgba(255,255,255,.72);
+      background: var(--headerBg);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
-      box-shadow: 0 1px 2px rgba(15,23,42,.06);
+      box-shadow: var(--shadow-sm);
     }
     .header-content{
       max-width:1600px; margin:0 auto;
@@ -57,7 +91,7 @@
       display:flex;align-items:center;justify-content:center;
       background: linear-gradient(135deg, var(--primary), var(--accent));
       box-shadow: 0 10px 18px rgba(37,99,235,.20);
-      border: 1px solid rgba(255,255,255,.7);
+      border: 1px solid rgba(255,255,255,.25);
     }
     .logo-icon i{color:#fff;font-size:20px}
     .logo-text h1{font-size:16px;font-weight:900;letter-spacing:.2px;line-height:1.1}
@@ -69,10 +103,11 @@
       border:1px solid transparent;background:transparent;
       display:flex;align-items:center;justify-content:center;
       cursor:pointer; transition:.2s;
+      color: var(--icon);
     }
     .icon-btn:hover{background: rgba(37,99,235,.08); border-color: rgba(37,99,235,.15)}
     .icon-btn:focus-visible{outline:none; box-shadow:0 0 0 4px var(--ring); border-color: rgba(37,99,235,.35)}
-    .icon-btn i{color:#334155;font-size:16px}
+    .icon-btn i{color:var(--icon);font-size:16px}
 
     .container{max-width:1600px;margin:0 auto;padding: 22px 24px 52px;}
 
@@ -93,8 +128,8 @@
     .tabs{
       position: relative;
       display:flex; gap:6px;
-      background: rgba(37,99,235,.08);
-      border:1px solid rgba(37,99,235,.12);
+      background: var(--tabBg);
+      border:1px solid var(--tabBd);
       padding:6px;
       border-radius: 14px;
       overflow: hidden;
@@ -119,7 +154,7 @@
       border-radius: 12px;
       border:1px solid transparent;
       background: transparent;
-      color:#334155;
+      color: var(--icon);
       cursor:pointer;
       font-weight:900;
       font-size: 13px;
@@ -129,10 +164,8 @@
       user-select:none;
     }
     .tab i{font-size:14px; opacity:.9}
-    .tab:hover{
-      background: rgba(255,255,255,.55);
-      border-color: rgba(148,163,184,.22);
-    }
+    .tab:hover{ background: rgba(255,255,255,.10); border-color: rgba(148,163,184,.22); }
+    html[data-theme="light"] .tab:hover{ background: rgba(255,255,255,.55); }
     .tab[aria-selected="true"]{ color:#fff; }
     .tab:focus-visible{ outline:none; box-shadow:0 0 0 4px var(--ring); }
 
@@ -146,22 +179,24 @@
       opacity: 0;
       transform: translateY(10px);
     }
-    .page.active{
-      display:block;
-      animation: pageIn .22s ease forwards;
-    }
+    .page.active{ display:block; animation: pageIn .22s ease forwards; }
     @keyframes pageIn{ to{ opacity:1; transform: translateY(0); } }
 
     .grid-2{display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:14px}
     .grid-auto{display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px}
 
     .card{
-      background: rgba(255,255,255,.85);
-      border:1px solid rgba(148,163,184,.22);
+      background: rgba(255,255,255,.10);
+      border:1px solid var(--cardBd);
       border-radius: 14px;
       padding: 14px;
-      box-shadow: 0 1px 2px rgba(15,23,42,.06);
+      box-shadow: var(--shadow-sm);
     }
+    html[data-theme="light"] .card{
+      background: rgba(255,255,255,.85);
+      border-color: rgba(148,163,184,.22);
+    }
+
     .section-head{
       display:flex; align-items:flex-end; justify-content:space-between;
       gap:14px; margin-bottom: 12px;
@@ -174,7 +209,7 @@
       font-weight:900;
       text-transform:uppercase;
       letter-spacing:.12px;
-      color:#334155;
+      color:var(--muted);
       display:flex;
       align-items:center;
       gap:8px;
@@ -204,14 +239,18 @@
       padding: 10px 12px;
       border-radius: 12px;
       border:1px solid rgba(37,99,235,.22);
-      background: rgba(255,255,255,.7);
+      background: rgba(255,255,255,.10);
       cursor:pointer;
       font-weight:900;
-      color:#1d4ed8;
+      color:#93c5fd;
       transition:.2s;
       user-select:none;
     }
-    .btn:hover{ background: rgba(37,99,235,.08); }
+    html[data-theme="light"] .btn{
+      background: rgba(255,255,255,.7);
+      color:#1d4ed8;
+    }
+    .btn:hover{ background: rgba(37,99,235,.12); }
     .btn:focus-visible{ outline:none; box-shadow:0 0 0 4px var(--ring); }
     .btn-primary{
       border-color: transparent;
@@ -222,41 +261,68 @@
 
     .row{ display:flex; gap:10px; flex-wrap: wrap; align-items:center; }
 
+    .input{
+      flex: 1 1 260px;
+      min-width: 220px;
+      display:flex; align-items:center; gap:10px;
+      background: rgba(255,255,255,.10);
+      border:1px solid var(--cardBd);
+      border-radius: 12px;
+      padding: 10px 12px;
+      box-shadow: var(--shadow-sm);
+    }
+    html[data-theme="light"] .input{
+      background: rgba(255,255,255,.85);
+      border-color: rgba(148,163,184,.25);
+    }
+    .input i{ color: var(--muted2); }
+    .input select{
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      color: var(--text);
+      font-weight: 750;
+      font-size: 13px;
+    }
+
     table{
       width:100%;
       border-collapse: collapse;
-      background: rgba(255,255,255,.85);
-      border:1px solid rgba(148,163,184,.22);
+      background: rgba(255,255,255,.10);
+      border:1px solid var(--cardBd);
       border-radius: 14px;
       overflow:hidden;
-      box-shadow: 0 1px 2px rgba(15,23,42,.06);
+      box-shadow: var(--shadow-sm);
+    }
+    html[data-theme="light"] table{
+      background: rgba(255,255,255,.85);
+      border-color: rgba(148,163,184,.22);
     }
     thead th{
       text-align:left;
       font-size:12px;
       text-transform:uppercase;
       letter-spacing:.12px;
-      color:#334155;
+      color:var(--muted);
       padding: 12px 12px;
-      background: rgba(37,99,235,.06);
-      border-bottom: 1px solid rgba(148,163,184,.22);
+      background: var(--tableHeadBg);
+      border-bottom: 1px solid var(--border);
     }
     tbody td{
       padding: 12px 12px;
       border-bottom: 1px solid rgba(148,163,184,.14);
       font-weight: 700;
-      color:#0f172a;
+      color: var(--text);
       font-size: 13px;
     }
-    tbody tr:hover{ background: rgba(37,99,235,.05); }
+    tbody tr:hover{ background: var(--rowHover); }
     tbody tr:last-child td{ border-bottom:none; }
 
     .chart{ height: 320px; padding: 10px; }
     .chart canvas{ width:100% !important; height:100% !important; }
 
-    @media (max-width: 1100px){
-      .grid-2{ grid-template-columns: 1fr; }
-    }
+    @media (max-width: 1100px){ .grid-2{ grid-template-columns: 1fr; } }
     @media (max-width: 900px){
       .tabsbar{flex-direction:column; align-items:flex-start}
       .page-header h2{font-size:28px}
@@ -272,7 +338,7 @@
         <div class="logo-icon"><i class="fas fa-heartbeat"></i></div>
         <div class="logo-text">
           <h1>Santé+</h1>
-          <p>Plateforme de santé professionnelle</p>
+          <p data-i18n="app.subtitle">Plateforme de santé professionnelle</p>
         </div>
       </div>
 
@@ -286,74 +352,67 @@
 
   <main class="container">
     <div class="page-header">
-      <h2>Bonjour, Dr. Victor Mouhammad 👋</h2>
-      <p>Dossier médical complet - Mardi 14 Janvier 2026</p>
+      <h2 data-i18n="header.greeting">Bonjour, Dr. Victor Mouhammad 👋</h2>
+      <p data-i18n="header.subline">Dossier médical complet - Mardi 14 Janvier 2026</p>
     </div>
 
-    <!-- NAVIGATION PRO (Patients supprimé) -->
     <div class="tabsbar">
       <div class="tabs" role="tablist" aria-label="Navigation">
         <div class="tab-indicator" id="tabIndicator" aria-hidden="true"></div>
 
         <button class="tab" role="tab" data-page="dashboard" aria-selected="true" aria-controls="page-dashboard">
-          <i class="fas fa-chart-line"></i> Dashboard
+          <i class="fas fa-chart-line"></i> <span data-i18n="tabs.dashboard">Dashboard</span>
         </button>
 
         <button class="tab" role="tab" data-page="capteurs" aria-selected="false" aria-controls="page-capteurs">
-          <i class="fas fa-wave-square"></i> Capteurs
+          <i class="fas fa-wave-square"></i> <span data-i18n="tabs.sensors">Capteurs</span>
         </button>
 
         <button class="tab" role="tab" data-page="historique" aria-selected="false" aria-controls="page-historique">
-          <i class="fas fa-clock-rotate-left"></i> Historique
+          <i class="fas fa-clock-rotate-left"></i> <span data-i18n="tabs.history">Historique</span>
         </button>
 
         <button class="tab" role="tab" data-page="settings" aria-selected="false" aria-controls="page-settings">
-          <i class="fas fa-message"></i> Messages
+          <i class="fas fa-message"></i> <span data-i18n="tabs.messages">Messages</span>
         </button>
       </div>
 
-      <div class="hint">Astuce : touches ← → + Enter/Espace • URL #page</div>
+      <div class="hint" data-i18n="hint">Astuce : touches ← → + Enter/Espace • URL #page</div>
     </div>
 
-    <!-- ===================== DASHBOARD : activité + fréquence ===================== -->
+    <!-- DASHBOARD -->
     <section id="page-dashboard" class="page active" role="tabpanel" aria-label="Dashboard">
       <div class="section-head">
         <div>
-          <h3>Activité & Fréquence</h3>
-          <p>Résumé des tendances : activité quotidienne et fréquence cardiaque.</p>
+          <h3 data-i18n="dash.title">Activité & Fréquence</h3>
+          <p data-i18n="dash.subtitle">Résumé des tendances : activité quotidienne et fréquence cardiaque.</p>
         </div>
         <div class="row">
-          <span class="badge b-info"><i class="fas fa-circle-info"></i> Session active</span>
-          <button class="btn btn-primary" type="button"><i class="fas fa-file-export"></i> Export</button>
+          <span class="badge b-info"><i class="fas fa-circle-info"></i> <span data-i18n="dash.session">Session active</span></span>
+          <button class="btn btn-primary" type="button"><i class="fas fa-file-export"></i> <span data-i18n="dash.export">Export</span></button>
         </div>
       </div>
 
       <div class="grid-auto">
         <div class="card">
-          <div class="card-title"><i class="fas fa-heart"></i> Fréquence cardiaque</div>
+          <div class="card-title"><i class="fas fa-heart"></i> <span data-i18n="dash.hr">Fréquence cardiaque</span></div>
           <div class="big" id="kpiHr">72</div>
-          <div class="sub">bpm • dernière mesure 08:30</div>
-          <div style="margin-top:10px">
-            <span class="badge b-good"><i class="fas fa-check"></i> Normal</span>
-          </div>
+          <div class="sub"><span data-i18n="dash.hrSub">bpm • dernière mesure 08:30</span></div>
+          <div style="margin-top:10px"><span class="badge b-good"><i class="fas fa-check"></i> <span data-i18n="status.normal">Normal</span></span></div>
         </div>
 
         <div class="card">
-          <div class="card-title"><i class="fas fa-person-walking"></i> Activité (pas)</div>
+          <div class="card-title"><i class="fas fa-person-walking"></i> <span data-i18n="dash.activity">Activité (pas)</span></div>
           <div class="big" id="kpiSteps">6 420</div>
-          <div class="sub">pas aujourd’hui • objectif 8 000</div>
-          <div style="margin-top:10px">
-            <span class="badge b-info"><i class="fas fa-bullseye"></i> 80% atteint</span>
-          </div>
+          <div class="sub"><span data-i18n="dash.activitySub">pas aujourd’hui • objectif 8 000</span></div>
+          <div style="margin-top:10px"><span class="badge b-info"><i class="fas fa-bullseye"></i> <span data-i18n="dash.goal">80% atteint</span></span></div>
         </div>
 
         <div class="card">
-          <div class="card-title"><i class="fas fa-fire"></i> Calories estimées</div>
+          <div class="card-title"><i class="fas fa-fire"></i> <span data-i18n="dash.calories">Calories estimées</span></div>
           <div class="big" id="kpiCal">420</div>
-          <div class="sub">kcal aujourd’hui • estimation</div>
-          <div style="margin-top:10px">
-            <span class="badge b-info"><i class="fas fa-chart-line"></i> Stable</span>
-          </div>
+          <div class="sub"><span data-i18n="dash.caloriesSub">kcal aujourd’hui • estimation</span></div>
+          <div style="margin-top:10px"><span class="badge b-info"><i class="fas fa-chart-line"></i> <span data-i18n="dash.stable">Stable</span></span></div>
         </div>
       </div>
 
@@ -361,73 +420,61 @@
         <div class="card">
           <div class="section-head" style="margin-bottom:10px">
             <div>
-              <h3 style="font-size:16px">Fréquence cardiaque (7 jours)</h3>
-              <p style="margin-top:2px">BPM moyen par jour.</p>
+              <h3 style="font-size:16px" data-i18n="dash.hr7">Fréquence cardiaque (7 jours)</h3>
+              <p style="margin-top:2px" data-i18n="dash.hr7Sub">BPM moyen par jour.</p>
             </div>
-            <span class="badge b-info"><i class="fas fa-calendar"></i> Semaine</span>
+            <span class="badge b-info"><i class="fas fa-calendar"></i> <span data-i18n="common.week">Semaine</span></span>
           </div>
-          <div class="chart">
-            <canvas id="dashHeart"></canvas>
-          </div>
+          <div class="chart"><canvas id="dashHeart"></canvas></div>
         </div>
 
         <div class="card">
           <div class="section-head" style="margin-bottom:10px">
             <div>
-              <h3 style="font-size:16px">Activité (7 jours)</h3>
-              <p style="margin-top:2px">Pas par jour.</p>
+              <h3 style="font-size:16px" data-i18n="dash.act7">Activité (7 jours)</h3>
+              <p style="margin-top:2px" data-i18n="dash.act7Sub">Pas par jour.</p>
             </div>
-            <span class="badge b-info"><i class="fas fa-calendar"></i> Semaine</span>
+            <span class="badge b-info"><i class="fas fa-calendar"></i> <span data-i18n="common.week">Semaine</span></span>
           </div>
-          <div class="chart">
-            <canvas id="dashActivity"></canvas>
-          </div>
+          <div class="chart"><canvas id="dashActivity"></canvas></div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== CAPTEURS : évolution pression artérielle ===================== -->
+    <!-- CAPTEURS -->
     <section id="page-capteurs" class="page" role="tabpanel" aria-label="Capteurs">
       <div class="section-head">
         <div>
-          <h3>Capteurs</h3>
-          <p>Évolution de la pression artérielle (démo). Tu peux remplacer par tes valeurs réelles.</p>
+          <h3 data-i18n="sensors.title">Capteurs</h3>
+          <p data-i18n="sensors.subtitle">Évolution de la pression artérielle (démo). Remplace par tes valeurs réelles.</p>
         </div>
         <div class="row">
-          <span class="badge b-info"><i class="fas fa-microchip"></i> Raspberry Pi 4</span>
+          <span class="badge b-info"><i class="fas fa-microchip"></i> <span data-i18n="sensors.pi">Raspberry Pi 4</span></span>
           <span class="badge b-info"><i class="fas fa-wave-square"></i> 400 Hz</span>
-          <button class="btn btn-primary" type="button" id="btnStartDemo">
-            <i class="fas fa-play"></i> Démo
-          </button>
-          <button class="btn" type="button" id="btnStopDemo">
-            <i class="fas fa-stop"></i> Stop
-          </button>
+          <button class="btn btn-primary" type="button" id="btnStartDemo"><i class="fas fa-play"></i> <span data-i18n="common.demo">Démo</span></button>
+          <button class="btn" type="button" id="btnStopDemo"><i class="fas fa-stop"></i> <span data-i18n="common.stop">Stop</span></button>
         </div>
       </div>
 
       <div class="grid-auto">
         <div class="card">
-          <div class="card-title"><i class="fas fa-heart-pulse"></i> Tension actuelle</div>
+          <div class="card-title"><i class="fas fa-heart-pulse"></i> <span data-i18n="sensors.bpNow">Tension actuelle</span></div>
           <div class="big"><span id="bpNow">120/80</span></div>
-          <div class="sub">mmHg • dernière mise à jour <span id="tick">—</span></div>
-          <div style="margin-top:10px">
-            <span class="badge b-good" id="bpStatus"><i class="fas fa-check"></i> Normal</span>
-          </div>
+          <div class="sub"><span data-i18n="sensors.bpNowSub">mmHg • dernière mise à jour</span> <span id="tick">—</span></div>
+          <div style="margin-top:10px"><span class="badge b-good" id="bpStatus"><i class="fas fa-check"></i> <span data-i18n="status.normal">Normal</span></span></div>
         </div>
 
         <div class="card">
-          <div class="card-title"><i class="fas fa-heart"></i> BPM (démo)</div>
+          <div class="card-title"><i class="fas fa-heart"></i> <span data-i18n="sensors.bpmDemo">BPM (démo)</span></div>
           <div class="big"><span id="bpmNow">72</span></div>
-          <div class="sub">bpm instantané (exemple)</div>
-          <div style="margin-top:10px">
-            <span class="badge b-info"><i class="fas fa-circle-info"></i> Données simulées</span>
-          </div>
+          <div class="sub" data-i18n="sensors.bpmDemoSub">bpm instantané (exemple)</div>
+          <div style="margin-top:10px"><span class="badge b-info"><i class="fas fa-circle-info"></i> <span data-i18n="sensors.simulated">Données simulées</span></span></div>
         </div>
 
         <div class="card">
-          <div class="card-title"><i class="fas fa-person-walking"></i> Présence (PIR)</div>
-          <div class="big" id="pirNow">Aucune</div>
-          <div class="sub">détection mouvement</div>
+          <div class="card-title"><i class="fas fa-person-walking"></i> <span data-i18n="sensors.pir">Présence (PIR)</span></div>
+          <div class="big" id="pirNow" data-i18n="sensors.none">Aucune</div>
+          <div class="sub" data-i18n="sensors.pirSub">détection mouvement</div>
           <div style="margin-top:10px" class="row">
             <span class="badge b-info"><i class="fas fa-bolt"></i> 5V</span>
             <span class="badge b-info"><i class="fas fa-circle-info"></i> Digital</span>
@@ -439,74 +486,72 @@
         <div class="card">
           <div class="section-head" style="margin-bottom:10px">
             <div>
-              <h3 style="font-size:16px">Évolution pression artérielle</h3>
-              <p style="margin-top:2px">Systolique / Diastolique (démo).</p>
+              <h3 style="font-size:16px" data-i18n="sensors.bpTrend">Évolution pression artérielle</h3>
+              <p style="margin-top:2px" data-i18n="sensors.bpTrendSub">Systolique / Diastolique (démo).</p>
             </div>
             <span class="badge b-info"><i class="fas fa-chart-line"></i> Graph</span>
           </div>
-          <div class="chart">
-            <canvas id="bpChart"></canvas>
-          </div>
+          <div class="chart"><canvas id="bpChart"></canvas></div>
         </div>
 
         <div class="card">
           <div class="section-head" style="margin-bottom:10px">
             <div>
-              <h3 style="font-size:16px">Diagnostic rapide</h3>
-              <p style="margin-top:2px">Résultats et actions recommandées.</p>
+              <h3 style="font-size:16px" data-i18n="sensors.diag">Diagnostic rapide</h3>
+              <p style="margin-top:2px" data-i18n="sensors.diagSub">Résultats et actions recommandées.</p>
             </div>
           </div>
 
           <div class="card" style="margin-bottom:10px">
             <div class="row" style="justify-content:space-between">
-              <div style="font-weight:900">Tension (plage attendue)</div>
+              <div style="font-weight:900" data-i18n="sensors.range">Tension (plage attendue)</div>
               <span class="badge b-good"><i class="fas fa-check"></i> OK</span>
             </div>
-            <div class="sub" style="margin-top:6px">
+            <div class="sub" style="margin-top:6px" data-i18n="sensors.rangeTip">
               Conseil : refaire une mesure après 2 minutes de repos si valeur élevée.
             </div>
           </div>
 
           <div class="card" style="margin-bottom:10px">
             <div class="row" style="justify-content:space-between">
-              <div style="font-weight:900">Présence PIR</div>
-              <span class="badge b-info"><i class="fas fa-circle-info"></i> Variable</span>
+              <div style="font-weight:900" data-i18n="sensors.pirCheck">Présence PIR</div>
+              <span class="badge b-info"><i class="fas fa-circle-info"></i> <span data-i18n="common.variable">Variable</span></span>
             </div>
-            <div class="sub" style="margin-top:6px">
+            <div class="sub" style="margin-top:6px" data-i18n="sensors.pirTip">
               Conseil : éviter sources de chaleur / mouvements parasites.
             </div>
           </div>
 
           <div class="row">
-            <button class="btn" type="button"><i class="fas fa-rotate"></i> Recalibrer</button>
-            <button class="btn" type="button"><i class="fas fa-file-lines"></i> Logs</button>
+            <button class="btn" type="button"><i class="fas fa-rotate"></i> <span data-i18n="common.recalibrate">Recalibrer</span></button>
+            <button class="btn" type="button"><i class="fas fa-file-lines"></i> <span data-i18n="common.logs">Logs</span></button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== HISTORIQUE : Waly / Binaf / Messaoud ===================== -->
+    <!-- HISTORIQUE -->
     <section id="page-historique" class="page" role="tabpanel" aria-label="Historique">
       <div class="section-head">
         <div>
-          <h3>Historique des patients</h3>
-          <p>Historique des mesures et événements.</p>
+          <h3 data-i18n="history.title">Historique des patients</h3>
+          <p data-i18n="history.subtitle">Historique des mesures et événements.</p>
         </div>
         <div class="row">
-          <span class="badge b-info"><i class="fas fa-clock"></i> 7 jours</span>
-          <button class="btn btn-primary" type="button"><i class="fas fa-download"></i> Export CSV</button>
+          <span class="badge b-info"><i class="fas fa-clock"></i> <span data-i18n="common.days7">7 jours</span></span>
+          <button class="btn btn-primary" type="button"><i class="fas fa-download"></i> <span data-i18n="history.exportCsv">Export CSV</span></button>
         </div>
       </div>
 
       <table aria-label="Historique patients">
         <thead>
           <tr>
-            <th>Patient</th>
-            <th>Date</th>
+            <th data-i18n="history.patient">Patient</th>
+            <th data-i18n="history.date">Date</th>
             <th>BPM</th>
-            <th>Pression</th>
+            <th data-i18n="history.bp">Pression</th>
             <th>SpO₂</th>
-            <th>Statut</th>
+            <th data-i18n="history.status">Statut</th>
           </tr>
         </thead>
         <tbody>
@@ -516,7 +561,7 @@
             <td>74</td>
             <td>121/79</td>
             <td>98%</td>
-            <td><span class="badge b-good"><i class="fas fa-check"></i> Normal</span></td>
+            <td><span class="badge b-good"><i class="fas fa-check"></i> <span data-i18n="status.normal">Normal</span></span></td>
           </tr>
           <tr>
             <td>Binaf</td>
@@ -524,7 +569,7 @@
             <td>88</td>
             <td>135/86</td>
             <td>96%</td>
-            <td><span class="badge b-warn"><i class="fas fa-triangle-exclamation"></i> À surveiller</span></td>
+            <td><span class="badge b-warn"><i class="fas fa-triangle-exclamation"></i> <span data-i18n="status.watch">À surveiller</span></span></td>
           </tr>
           <tr>
             <td>Messaoud</td>
@@ -532,7 +577,7 @@
             <td>69</td>
             <td>118/76</td>
             <td>99%</td>
-            <td><span class="badge b-good"><i class="fas fa-check"></i> Normal</span></td>
+            <td><span class="badge b-good"><i class="fas fa-check"></i> <span data-i18n="status.normal">Normal</span></span></td>
           </tr>
           <tr>
             <td>Waly</td>
@@ -540,7 +585,7 @@
             <td>92</td>
             <td>142/90</td>
             <td>95%</td>
-            <td><span class="badge b-bad"><i class="fas fa-bell"></i> Alerte</span></td>
+            <td><span class="badge b-bad"><i class="fas fa-bell"></i> <span data-i18n="status.alert">Alerte</span></span></td>
           </tr>
         </tbody>
       </table>
@@ -548,11 +593,11 @@
       <div class="card" style="margin-top:14px">
         <div class="section-head" style="margin-bottom:10px">
           <div>
-            <h3 style="font-size:16px">Notes (démo)</h3>
-            <p style="margin-top:2px">Commentaires associés aux mesures.</p>
+            <h3 style="font-size:16px" data-i18n="history.notes">Notes</h3>
+            <p style="margin-top:2px" data-i18n="history.notesSub">Commentaires associés aux mesures.</p>
           </div>
         </div>
-        <div class="sub">
+        <div class="sub" data-i18n="history.notesBody">
           • Waly : refaire la tension après repos, vérifier hydratation.<br>
           • Binaf : surveillance glycémie + tension, programmer contrôle.<br>
           • Messaoud : paramètres stables, poursuivre suivi standard.
@@ -560,89 +605,332 @@
       </div>
     </section>
 
-    <!-- ===================== MESSAGES PATIENT (paramètres) ===================== -->
+    <!-- SETTINGS / MESSAGES + THEME + LANGUAGE -->
     <section id="page-settings" class="page" role="tabpanel" aria-label="Messages">
       <div class="section-head">
         <div>
-          <h3>Messages patient</h3>
-          <p>Exemples de messages automatiques possibles (SMS / notification / email).</p>
+          <h3 data-i18n="msg.title">Messages patient</h3>
+          <p data-i18n="msg.subtitle">Exemples de messages automatiques possibles (SMS / notification / email).</p>
         </div>
         <div class="row">
-          <span class="badge b-info"><i class="fas fa-message"></i> Templates</span>
-          <button class="btn btn-primary" type="button"><i class="fas fa-floppy-disk"></i> Enregistrer</button>
+          <span class="badge b-info"><i class="fas fa-message"></i> <span data-i18n="msg.templates">Templates</span></span>
+          <button class="btn btn-primary" type="button"><i class="fas fa-floppy-disk"></i> <span data-i18n="common.save">Enregistrer</span></button>
+        </div>
+      </div>
+
+      <!-- REAL SETTINGS -->
+      <div class="card" style="margin-bottom:14px">
+        <div class="section-head" style="margin-bottom:10px">
+          <div>
+            <h3 style="font-size:16px" data-i18n="prefs.title">Préférences</h3>
+            <p style="margin-top:2px" data-i18n="prefs.subtitle">Thème et langue appliqués immédiatement.</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input" style="flex:0 1 260px">
+            <i class="fas fa-palette"></i>
+            <select id="themeSelect" aria-label="Thème">
+              <option value="light" data-i18n="prefs.themeLight">Thème : Clair</option>
+              <option value="dark" data-i18n="prefs.themeDark">Thème : Sombre</option>
+            </select>
+          </div>
+
+          <div class="input" style="flex:0 1 260px">
+            <i class="fas fa-language"></i>
+            <select id="langSelect" aria-label="Langue">
+              <option value="fr">Langue : Français</option>
+              <option value="en">Language : English</option>
+            </select>
+          </div>
+
+          <span class="badge b-info"><i class="fas fa-circle-info"></i> <span data-i18n="prefs.saved">Sauvegardé automatiquement</span></span>
         </div>
       </div>
 
       <div class="grid-2">
         <div class="card">
-          <div class="card-title"><i class="fas fa-check"></i> Message “Résultats normaux”</div>
-          <div style="margin-top:10px;font-weight:850">
+          <div class="card-title"><i class="fas fa-check"></i> <span data-i18n="msg.normalTitle">Message “Résultats normaux”</span></div>
+          <div style="margin-top:10px;font-weight:850" data-i18n="msg.normalBody">
             Bonjour {patient}, vos mesures du {date} sont normales.
           </div>
-          <div class="sub" style="margin-top:8px">
+          <div class="sub" style="margin-top:8px" data-i18n="msg.normalSub">
             BPM: {bpm} • Tension: {bp} • SpO₂: {spo2}. Continuez vos habitudes.
           </div>
-          <div class="row" style="margin-top:12px">
-            <span class="badge b-good"><i class="fas fa-check"></i> Recommandé</span>
-            <button class="btn" type="button"><i class="fas fa-copy"></i> Copier</button>
-          </div>
         </div>
 
         <div class="card">
-          <div class="card-title"><i class="fas fa-triangle-exclamation"></i> Message “À surveiller”</div>
-          <div style="margin-top:10px;font-weight:850">
+          <div class="card-title"><i class="fas fa-triangle-exclamation"></i> <span data-i18n="msg.watchTitle">Message “À surveiller”</span></div>
+          <div style="margin-top:10px;font-weight:850" data-i18n="msg.watchBody">
             Bonjour {patient}, certaines valeurs sont à surveiller ({valeur}).
           </div>
-          <div class="sub" style="margin-top:8px">
+          <div class="sub" style="margin-top:8px" data-i18n="msg.watchSub">
             Merci de refaire une mesure dans 10 minutes au repos. Si cela persiste, contactez le cabinet.
           </div>
-          <div class="row" style="margin-top:12px">
-            <span class="badge b-warn"><i class="fas fa-triangle-exclamation"></i> Attention</span>
-            <button class="btn" type="button"><i class="fas fa-copy"></i> Copier</button>
-          </div>
         </div>
 
         <div class="card">
-          <div class="card-title"><i class="fas fa-bell"></i> Message “Alerte”</div>
-          <div style="margin-top:10px;font-weight:850">
+          <div class="card-title"><i class="fas fa-bell"></i> <span data-i18n="msg.alertTitle">Message “Alerte”</span></div>
+          <div style="margin-top:10px;font-weight:850" data-i18n="msg.alertBody">
             Bonjour {patient}, une valeur critique a été détectée ({valeur}).
           </div>
-          <div class="sub" style="margin-top:8px">
+          <div class="sub" style="margin-top:8px" data-i18n="msg.alertSub">
             Merci de contacter immédiatement un professionnel de santé ou les urgences selon votre état.
-          </div>
-          <div class="row" style="margin-top:12px">
-            <span class="badge b-bad"><i class="fas fa-bell"></i> Urgent</span>
-            <button class="btn" type="button"><i class="fas fa-copy"></i> Copier</button>
           </div>
         </div>
 
         <div class="card">
-          <div class="card-title"><i class="fas fa-calendar-check"></i> Message “Rappel rendez-vous / mesure”</div>
-          <div style="margin-top:10px;font-weight:850">
+          <div class="card-title"><i class="fas fa-calendar-check"></i> <span data-i18n="msg.reminderTitle">Message “Rappel”</span></div>
+          <div style="margin-top:10px;font-weight:850" data-i18n="msg.reminderBody">
             Bonjour {patient}, rappel : mesure / contrôle prévu le {date} à {heure}.
           </div>
-          <div class="sub" style="margin-top:8px">
+          <div class="sub" style="margin-top:8px" data-i18n="msg.reminderSub">
             Merci d’être au repos 5 minutes avant la mesure et d’éviter café/effort.
           </div>
-          <div class="row" style="margin-top:12px">
-            <span class="badge b-info"><i class="fas fa-calendar"></i> Rappel</span>
-            <button class="btn" type="button"><i class="fas fa-copy"></i> Copier</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:14px">
-        <div class="card-title"><i class="fas fa-circle-info"></i> Variables disponibles (démo)</div>
-        <div class="sub" style="margin-top:8px">
-          {patient}, {date}, {heure}, {bpm}, {bp}, {spo2}, {valeur} <br>
-          Exemple : "Bonjour Waly, vos mesures du 14/01/2026 sont normales."
         </div>
       </div>
     </section>
   </main>
 
   <script>
-    // ===================== NAVIGATION =====================
+    // =========================================================
+    // I18N DICTIONARY (FR/EN)
+    // =========================================================
+    const I18N = {
+      fr: {
+        "app.subtitle":"Plateforme de santé professionnelle",
+        "header.greeting":"Bonjour, Dr. Victor Mouhammad 👋",
+        "header.subline":"Dossier médical complet - Mardi 14 Janvier 2026",
+        "hint":"Astuce : touches ← → + Enter/Espace • URL #page",
+
+        "tabs.dashboard":"Dashboard",
+        "tabs.sensors":"Capteurs",
+        "tabs.history":"Historique",
+        "tabs.messages":"Messages",
+
+        "dash.title":"Activité & Fréquence",
+        "dash.subtitle":"Résumé des tendances : activité quotidienne et fréquence cardiaque.",
+        "dash.session":"Session active",
+        "dash.export":"Export",
+        "dash.hr":"Fréquence cardiaque",
+        "dash.hrSub":"bpm • dernière mesure 08:30",
+        "dash.activity":"Activité (pas)",
+        "dash.activitySub":"pas aujourd’hui • objectif 8 000",
+        "dash.goal":"80% atteint",
+        "dash.calories":"Calories estimées",
+        "dash.caloriesSub":"kcal aujourd’hui • estimation",
+        "dash.stable":"Stable",
+        "dash.hr7":"Fréquence cardiaque (7 jours)",
+        "dash.hr7Sub":"BPM moyen par jour.",
+        "dash.act7":"Activité (7 jours)",
+        "dash.act7Sub":"Pas par jour.",
+
+        "sensors.title":"Capteurs",
+        "sensors.subtitle":"Évolution de la pression artérielle (démo). Remplace par tes valeurs réelles.",
+        "sensors.pi":"Raspberry Pi 4",
+        "sensors.bpNow":"Tension actuelle",
+        "sensors.bpNowSub":"mmHg • dernière mise à jour",
+        "sensors.bpmDemo":"BPM (démo)",
+        "sensors.bpmDemoSub":"bpm instantané (exemple)",
+        "sensors.simulated":"Données simulées",
+        "sensors.pir":"Présence (PIR)",
+        "sensors.none":"Aucune",
+        "sensors.pirSub":"détection mouvement",
+        "sensors.bpTrend":"Évolution pression artérielle",
+        "sensors.bpTrendSub":"Systolique / Diastolique (démo).",
+        "sensors.diag":"Diagnostic rapide",
+        "sensors.diagSub":"Résultats et actions recommandées.",
+        "sensors.range":"Tension (plage attendue)",
+        "sensors.rangeTip":"Conseil : refaire une mesure après 2 minutes de repos si valeur élevée.",
+        "sensors.pirCheck":"Présence PIR",
+        "sensors.pirTip":"Conseil : éviter sources de chaleur / mouvements parasites.",
+
+        "history.title":"Historique des patients",
+        "history.subtitle":"Historique des mesures et événements.",
+        "history.exportCsv":"Export CSV",
+        "history.patient":"Patient",
+        "history.date":"Date",
+        "history.bp":"Pression",
+        "history.status":"Statut",
+        "history.notes":"Notes",
+        "history.notesSub":"Commentaires associés aux mesures.",
+        "history.notesBody":"• Waly : refaire la tension après repos, vérifier hydratation.<br>• Binaf : surveillance glycémie + tension, programmer contrôle.<br>• Messaoud : paramètres stables, poursuivre suivi standard.",
+
+        "msg.title":"Messages patient",
+        "msg.subtitle":"Exemples de messages automatiques possibles (SMS / notification / email).",
+        "msg.templates":"Templates",
+        "msg.normalTitle":"Message “Résultats normaux”",
+        "msg.normalBody":"Bonjour {patient}, vos mesures du {date} sont normales.",
+        "msg.normalSub":"BPM: {bpm} • Tension: {bp} • SpO₂: {spo2}. Continuez vos habitudes.",
+        "msg.watchTitle":"Message “À surveiller”",
+        "msg.watchBody":"Bonjour {patient}, certaines valeurs sont à surveiller ({valeur}).",
+        "msg.watchSub":"Merci de refaire une mesure dans 10 minutes au repos. Si cela persiste, contactez le cabinet.",
+        "msg.alertTitle":"Message “Alerte”",
+        "msg.alertBody":"Bonjour {patient}, une valeur critique a été détectée ({valeur}).",
+        "msg.alertSub":"Merci de contacter immédiatement un professionnel de santé ou les urgences selon votre état.",
+        "msg.reminderTitle":"Message “Rappel”",
+        "msg.reminderBody":"Bonjour {patient}, rappel : mesure / contrôle prévu le {date} à {heure}.",
+        "msg.reminderSub":"Merci d’être au repos 5 minutes avant la mesure et d’éviter café/effort.",
+
+        "prefs.title":"Préférences",
+        "prefs.subtitle":"Thème et langue appliqués immédiatement.",
+        "prefs.themeLight":"Thème : Clair",
+        "prefs.themeDark":"Thème : Sombre",
+        "prefs.saved":"Sauvegardé automatiquement",
+
+        "common.week":"Semaine",
+        "common.days7":"7 jours",
+        "common.demo":"Démo",
+        "common.stop":"Stop",
+        "common.save":"Enregistrer",
+        "common.logs":"Logs",
+        "common.recalibrate":"Recalibrer",
+        "common.variable":"Variable",
+
+        "status.normal":"Normal",
+        "status.watch":"À surveiller",
+        "status.alert":"Alerte"
+      },
+
+      en: {
+        "app.subtitle":"Professional health platform",
+        "header.greeting":"Hello, Dr. Victor Mouhammad 👋",
+        "header.subline":"Full medical record - Tuesday, Jan 14, 2026",
+        "hint":"Tip: use ← → + Enter/Space • URL #page",
+
+        "tabs.dashboard":"Dashboard",
+        "tabs.sensors":"Sensors",
+        "tabs.history":"History",
+        "tabs.messages":"Messages",
+
+        "dash.title":"Activity & Heart Rate",
+        "dash.subtitle":"Trends summary: daily activity and heart rate.",
+        "dash.session":"Active session",
+        "dash.export":"Export",
+        "dash.hr":"Heart rate",
+        "dash.hrSub":"bpm • last reading 08:30",
+        "dash.activity":"Activity (steps)",
+        "dash.activitySub":"steps today • goal 8,000",
+        "dash.goal":"80% reached",
+        "dash.calories":"Estimated calories",
+        "dash.caloriesSub":"kcal today • estimate",
+        "dash.stable":"Stable",
+        "dash.hr7":"Heart rate (7 days)",
+        "dash.hr7Sub":"Average BPM per day.",
+        "dash.act7":"Activity (7 days)",
+        "dash.act7Sub":"Steps per day.",
+
+        "sensors.title":"Sensors",
+        "sensors.subtitle":"Blood pressure trend (demo). Replace with real values.",
+        "sensors.pi":"Raspberry Pi 4",
+        "sensors.bpNow":"Current blood pressure",
+        "sensors.bpNowSub":"mmHg • last update",
+        "sensors.bpmDemo":"BPM (demo)",
+        "sensors.bpmDemoSub":"instant BPM (example)",
+        "sensors.simulated":"Simulated data",
+        "sensors.pir":"Presence (PIR)",
+        "sensors.none":"None",
+        "sensors.pirSub":"motion detection",
+        "sensors.bpTrend":"Blood pressure trend",
+        "sensors.bpTrendSub":"Systolic / Diastolic (demo).",
+        "sensors.diag":"Quick diagnostics",
+        "sensors.diagSub":"Results and recommended actions.",
+        "sensors.range":"BP expected range",
+        "sensors.rangeTip":"Tip: measure again after 2 minutes of rest if elevated.",
+        "sensors.pirCheck":"PIR presence",
+        "sensors.pirTip":"Tip: avoid heat sources / false motion triggers.",
+
+        "history.title":"Patient history",
+        "history.subtitle":"Measurements and events history.",
+        "history.exportCsv":"Export CSV",
+        "history.patient":"Patient",
+        "history.date":"Date",
+        "history.bp":"Blood pressure",
+        "history.status":"Status",
+        "history.notes":"Notes",
+        "history.notesSub":"Comments linked to readings.",
+        "history.notesBody":"• Waly: recheck BP after rest, check hydration.<br>• Binaf: monitor glucose + BP, schedule follow-up.<br>• Messaoud: stable parameters, continue standard monitoring.",
+
+        "msg.title":"Patient messages",
+        "msg.subtitle":"Examples of automated messages (SMS / push / email).",
+        "msg.templates":"Templates",
+        "msg.normalTitle":"Message “Normal results”",
+        "msg.normalBody":"Hello {patient}, your readings on {date} are normal.",
+        "msg.normalSub":"BPM: {bpm} • BP: {bp} • SpO₂: {spo2}. Keep up your routine.",
+        "msg.watchTitle":"Message “Needs attention”",
+        "msg.watchBody":"Hello {patient}, some values need attention ({valeur}).",
+        "msg.watchSub":"Please re-measure in 10 minutes at rest. If it persists, contact the clinic.",
+        "msg.alertTitle":"Message “Alert”",
+        "msg.alertBody":"Hello {patient}, a critical value was detected ({valeur}).",
+        "msg.alertSub":"Please contact a healthcare professional immediately, or emergency services if needed.",
+        "msg.reminderTitle":"Message “Reminder”",
+        "msg.reminderBody":"Hello {patient}, reminder: check-up planned on {date} at {heure}.",
+        "msg.reminderSub":"Please rest 5 minutes before measuring and avoid coffee/exertion.",
+
+        "prefs.title":"Preferences",
+        "prefs.subtitle":"Theme and language apply immediately.",
+        "prefs.themeLight":"Theme: Light",
+        "prefs.themeDark":"Theme: Dark",
+        "prefs.saved":"Saved automatically",
+
+        "common.week":"Week",
+        "common.days7":"7 days",
+        "common.demo":"Demo",
+        "common.stop":"Stop",
+        "common.save":"Save",
+        "common.logs":"Logs",
+        "common.recalibrate":"Recalibrate",
+        "common.variable":"Variable",
+
+        "status.normal":"Normal",
+        "status.watch":"Watch",
+        "status.alert":"Alert"
+      }
+    };
+
+    // =========================================================
+    // THEME + LANGUAGE (persist in localStorage)
+    // =========================================================
+    const THEME_KEY = "sante_theme";
+    const LANG_KEY  = "sante_lang";
+
+    function setTheme(theme){
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem(THEME_KEY, theme);
+      // Update select label text (options are translated too)
+      document.getElementById("themeSelect").value = theme;
+      // Some Chart.js canvases may look better updated
+      refreshCharts();
+    }
+
+    function setLang(lang){
+      document.documentElement.lang = lang;
+      localStorage.setItem(LANG_KEY, lang);
+      document.getElementById("langSelect").value = lang;
+      applyI18n(lang);
+    }
+
+    function applyI18n(lang){
+      const dict = I18N[lang] || I18N.fr;
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (!dict[key]) return;
+        el.innerHTML = dict[key];
+      });
+
+      // Also update theme option texts (since they contain i18n keys)
+      document.querySelectorAll("#themeSelect option[data-i18n]").forEach(opt=>{
+        const key = opt.getAttribute("data-i18n");
+        if (dict[key]) opt.textContent = dict[key];
+      });
+
+      // Rebuild charts labels if needed
+      rebuildCharts(lang);
+    }
+
+    // =========================================================
+    // NAVIGATION
+    // =========================================================
     const tabs = Array.from(document.querySelectorAll('.tab'));
     const pages = Array.from(document.querySelectorAll('.page'));
     const indicator = document.getElementById('tabIndicator');
@@ -689,7 +977,7 @@
       setActive(tabs[next].dataset.page);
     });
 
-    function init(){
+    function initNav(){
       const initial = (location.hash || '#dashboard').replace('#','');
       const exists = pages.some(p => p.id === 'page-' + initial);
       setActive(exists ? initial : 'dashboard', false);
@@ -697,19 +985,29 @@
       window.addEventListener('resize', () => moveIndicatorTo(getActiveTab()));
     }
 
-    // ===================== CHARTS =====================
+    // =========================================================
+    // CHARTS
+    // =========================================================
     let dashHeartChart = null;
     let dashActivityChart = null;
     let bpChart = null;
 
-    function buildCharts(){
-      // Dashboard - Heart
+    function buildCharts(lang){
+      const labelsFR = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+      const labelsEN = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+      const labels = (lang === 'en') ? labelsEN : labelsFR;
+
+      // Destroy if already exists
+      if (dashHeartChart) dashHeartChart.destroy();
+      if (dashActivityChart) dashActivityChart.destroy();
+      if (bpChart) bpChart.destroy();
+
       const heartCtx = document.getElementById('dashHeart')?.getContext('2d');
       if (heartCtx) {
         dashHeartChart = new Chart(heartCtx, {
           type: 'line',
           data: {
-            labels: ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'],
+            labels,
             datasets: [{
               label: 'BPM',
               data: [68,72,70,75,71,73,72],
@@ -721,44 +1019,28 @@
               pointRadius:3
             }]
           },
-          options: {
-            responsive:true, maintainAspectRatio:false,
-            plugins:{ legend:{ display:false } },
-            scales:{
-              x:{ grid:{ color:'rgba(148,163,184,.25)' }, ticks:{ color:'#475569', font:{weight:'600'} } },
-              y:{ grid:{ color:'rgba(148,163,184,.25)' }, ticks:{ color:'#475569', font:{weight:'600'} } }
-            }
-          }
+          options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false } } }
         });
       }
 
-      // Dashboard - Activity
       const actCtx = document.getElementById('dashActivity')?.getContext('2d');
       if (actCtx) {
         dashActivityChart = new Chart(actCtx, {
           type: 'bar',
           data: {
-            labels: ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'],
+            labels,
             datasets: [{
-              label: 'Pas',
+              label: (lang === 'en') ? 'Steps' : 'Pas',
               data: [5100, 7200, 6400, 8200, 6100, 9000, 7420],
               backgroundColor:'rgba(37,99,235,.35)',
               borderColor:'#2563eb',
               borderWidth:1
             }]
           },
-          options: {
-            responsive:true, maintainAspectRatio:false,
-            plugins:{ legend:{ display:false } },
-            scales:{
-              x:{ grid:{ color:'rgba(148,163,184,.15)' }, ticks:{ color:'#475569', font:{weight:'600'} } },
-              y:{ grid:{ color:'rgba(148,163,184,.25)' }, ticks:{ color:'#475569', font:{weight:'600'} } }
-            }
-          }
+          options: { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false } } }
         });
       }
 
-      // Capteurs - BP evolution
       const bpCtx = document.getElementById('bpChart')?.getContext('2d');
       if (bpCtx) {
         bpChart = new Chart(bpCtx, {
@@ -766,23 +1048,30 @@
           data:{
             labels:['05 Jan','08 Jan','10 Jan','12 Jan','14 Jan'],
             datasets:[
-              { label:'Systolique', data:[118,122,120,119,120], borderColor:'#dc2626', backgroundColor:'rgba(220,38,38,.06)', fill:true, tension:.35, borderWidth:2, pointRadius:3 },
-              { label:'Diastolique', data:[78,82,80,79,80], borderColor:'#2563eb', backgroundColor:'rgba(37,99,235,.06)', fill:true, tension:.35, borderWidth:2, pointRadius:3 }
+              { label:(lang === 'en') ? 'Systolic' : 'Systolique', data:[118,122,120,119,120], borderColor:'#dc2626', backgroundColor:'rgba(220,38,38,.06)', fill:true, tension:.35, borderWidth:2, pointRadius:3 },
+              { label:(lang === 'en') ? 'Diastolic' : 'Diastolique', data:[78,82,80,79,80], borderColor:'#2563eb', backgroundColor:'rgba(37,99,235,.06)', fill:true, tension:.35, borderWidth:2, pointRadius:3 }
             ]
           },
-          options:{
-            responsive:true, maintainAspectRatio:false,
-            plugins:{ legend:{ display:true, position:'bottom', labels:{ color:'#334155', font:{weight:'700'} } } },
-            scales:{
-              x:{ grid:{ color:'rgba(148,163,184,.25)' }, ticks:{ color:'#475569', font:{weight:'600'} } },
-              y:{ grid:{ color:'rgba(148,163,184,.25)' }, ticks:{ color:'#475569', font:{weight:'600'} } }
-            }
-          }
+          options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:true, position:'bottom' } } }
         });
       }
     }
 
-    // ===================== CAPTEURS : DEMO =====================
+    function rebuildCharts(lang){
+      // In this file, rebuilding is safe (charts are not huge).
+      buildCharts(lang);
+    }
+
+    function refreshCharts(){
+      // Chart.js uses canvas colors you defined; no hard refresh required.
+      // But a rebuild avoids contrast issues if you later customize chart options.
+      const lang = localStorage.getItem(LANG_KEY) || "fr";
+      rebuildCharts(lang);
+    }
+
+    // =========================================================
+    // CAPTEURS DEMO
+    // =========================================================
     let demoTimer = null;
     let t = 0;
 
@@ -804,28 +1093,26 @@
         document.getElementById('bpmNow').textContent = bpm;
         document.getElementById('kpiHr').textContent = bpm;
 
-        // Fake BP
         const sys = Math.round(118 + 6*Math.sin(t/9) + 2*Math.sin(t/3.8));
         const dia = Math.round(78 + 4*Math.sin(t/10) + 2*Math.sin(t/4.1));
         document.getElementById('bpNow').textContent = `${sys}/${dia}`;
 
         const bpStatus = document.getElementById('bpStatus');
         if (sys >= 140 || dia >= 90) {
-          bpStatus.innerHTML = '<i class="fas fa-bell"></i> Élevée';
+          bpStatus.innerHTML = '<i class="fas fa-bell"></i> ' + (document.documentElement.lang === 'en' ? 'High' : 'Élevée');
           setBadge(bpStatus, 'bad');
         } else if (sys >= 130 || dia >= 85) {
-          bpStatus.innerHTML = '<i class="fas fa-triangle-exclamation"></i> À surveiller';
+          bpStatus.innerHTML = '<i class="fas fa-triangle-exclamation"></i> ' + (document.documentElement.lang === 'en' ? 'Watch' : 'À surveiller');
           setBadge(bpStatus, 'warn');
         } else {
-          bpStatus.innerHTML = '<i class="fas fa-check"></i> Normal';
+          bpStatus.innerHTML = '<i class="fas fa-check"></i> ' + (document.documentElement.lang === 'en' ? 'Normal' : 'Normal');
           setBadge(bpStatus, 'good');
         }
 
-        // PIR
-        const pir = (Math.random() < 0.08) ? 'Mouvement détecté' : 'Aucune';
-        document.getElementById('pirNow').textContent = pir;
+        const pir = (Math.random() < 0.08) ? (document.documentElement.lang === 'en' ? 'Motion detected' : 'Mouvement détecté') : (document.documentElement.lang === 'en' ? 'None' : 'Aucune');
+        const pirEl = document.getElementById('pirNow');
+        pirEl.textContent = pir;
 
-        // tick
         const now = new Date();
         const hh = String(now.getHours()).padStart(2,'0');
         const mm = String(now.getMinutes()).padStart(2,'0');
@@ -847,9 +1134,34 @@
       if (stopBtn) stopBtn.addEventListener('click', stopDemo);
     }
 
-    // Init
-    init();
-    buildCharts();
+    // =========================================================
+    // SETTINGS BINDINGS (theme + lang)
+    // =========================================================
+    function initPreferences(){
+      const themeSelect = document.getElementById("themeSelect");
+      const langSelect  = document.getElementById("langSelect");
+
+      // Load saved
+      const savedTheme = localStorage.getItem(THEME_KEY) || "light";
+      const savedLang  = localStorage.getItem(LANG_KEY)  || "fr";
+
+      themeSelect.value = savedTheme;
+      langSelect.value  = savedLang;
+
+      setTheme(savedTheme);
+      setLang(savedLang);
+
+      // Apply on change
+      themeSelect.addEventListener("change", (e)=> setTheme(e.target.value));
+      langSelect.addEventListener("change",  (e)=> setLang(e.target.value));
+    }
+
+    // =========================================================
+    // INIT
+    // =========================================================
+    initNav();
+    initPreferences();
+    buildCharts(localStorage.getItem(LANG_KEY) || "fr");
     bindButtons();
   </script>
 </body>
