@@ -12,6 +12,7 @@
     :root{
       --bg-1:#f5f9ff; --bg-2:#edf4ff; --bg-3:#eef2ff;
       --card:rgba(255,255,255,.92);
+      --cardSolid:#ffffff;
       --text:#0f172a; --muted:#475569; --muted2:#64748b;
       --primary:#2563eb; --accent:#4f46e5;
       --border:rgba(148,163,184,.35);
@@ -19,7 +20,12 @@
       --shadow-sm:0 1px 2px rgba(15,23,42,.06);
       --shadow-md:0 10px 20px rgba(15,23,42,.08);
       --shadow-lg:0 18px 40px rgba(15,23,42,.12);
-      --r-lg:16px; --r-md:12px;
+      --r-lg:16px; --r-md:12px; --r-sm:10px;
+
+      --good-bg:#ecfdf5; --good-bd:#bbf7d0; --good-tx:#166534;
+      --warn-bg:#fffbeb; --warn-bd:#fde68a; --warn-tx:#92400e;
+      --bad-bg:#fef2f2;  --bad-bd:#fecaca;  --bad-tx:#991b1b;
+      --info-bg:#eff6ff; --info-bd:#bfdbfe; --info-tx:#1e40af;
     }
 
     *{margin:0;padding:0;box-sizing:border-box}
@@ -91,7 +97,7 @@
       font-weight: 700;
     }
 
-    /* ===== Tabs pro + indicateur ===== */
+    /* Tabs pro + indicateur */
     .tabs{
       position: relative;
       display:flex; gap:6px;
@@ -101,8 +107,6 @@
       border-radius: 14px;
       overflow: hidden;
     }
-
-    /* Indicateur animé derrière l’onglet actif */
     .tab-indicator{
       position:absolute;
       top:6px;
@@ -115,8 +119,6 @@
       transition: transform .22s ease, width .22s ease;
       z-index: 0;
     }
-
-    /* Les boutons passent au-dessus de l’indicateur */
     .tab{
       position: relative;
       z-index: 1;
@@ -135,20 +137,17 @@
       user-select:none;
     }
     .tab i{font-size:14px; opacity:.9}
-
     .tab:hover{
       background: rgba(255,255,255,.55);
       border-color: rgba(148,163,184,.22);
     }
-    .tab[aria-selected="true"]{
-      color:#fff;
-    }
+    .tab[aria-selected="true"]{ color:#fff; }
     .tab:focus-visible{
       outline:none;
       box-shadow:0 0 0 4px var(--ring);
     }
 
-    /* Pages : transition plus “app” */
+    /* Pages */
     .page{
       display:none;
       border-radius: var(--r-lg);
@@ -163,23 +162,163 @@
       display:block;
       animation: pageIn .22s ease forwards;
     }
-    @keyframes pageIn{
-      to{ opacity:1; transform: translateY(0); }
-    }
+    @keyframes pageIn{ to{ opacity:1; transform: translateY(0); } }
 
-    /* Small helpers */
-    .grid-3{display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px}
-    .mini-card{
-      background: rgba(255,255,255,.8);
+    /* Helpers */
+    .grid-2{display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:14px}
+    .grid-3{display:grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap:14px}
+    .grid-auto{display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px}
+
+    .card{
+      background: rgba(255,255,255,.85);
       border:1px solid rgba(148,163,184,.22);
       border-radius: 14px;
       padding: 14px;
       box-shadow: var(--shadow-sm);
     }
-    .mini-title{font-size:12px; font-weight:900; letter-spacing:.12px; text-transform:uppercase; color:#334155}
-    .mini-value{font-size:28px; font-weight:950; margin-top:10px}
-    .mini-sub{font-size:12px; color:var(--muted2); font-weight:700; margin-top:2px}
+    .card-title{
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.12px;
+      color:#334155;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .card-title i{color: var(--primary)}
+    .big{
+      font-size:28px;
+      font-weight:950;
+      margin-top:10px;
+      letter-spacing:-.2px;
+    }
+    .sub{
+      font-size:12px;
+      color:var(--muted2);
+      font-weight:700;
+      margin-top:2px;
+    }
+    .section-head{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap:14px; margin-bottom: 12px;
+    }
+    .section-head h3{
+      font-size:18px; font-weight:950; letter-spacing:-.2px;
+    }
+    .section-head p{
+      color: var(--muted);
+      font-weight:650;
+      font-size: 13px;
+    }
 
+    /* Chips / badges */
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid;
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.1px;
+      white-space:nowrap;
+    }
+    .badge i{font-size:12px}
+    .b-good{ background:var(--good-bg); border-color:var(--good-bd); color:var(--good-tx); }
+    .b-warn{ background:var(--warn-bg); border-color:var(--warn-bd); color:var(--warn-tx); }
+    .b-bad { background:var(--bad-bg);  border-color:var(--bad-bd);  color:var(--bad-tx);  }
+    .b-info{ background:var(--info-bg); border-color:var(--info-bd); color:var(--info-tx); }
+
+    /* Buttons */
+    .btn{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border:1px solid rgba(37,99,235,.22);
+      background: rgba(255,255,255,.7);
+      cursor:pointer;
+      font-weight:900;
+      color:#1d4ed8;
+      transition:.2s;
+      user-select:none;
+    }
+    .btn:hover{ background: rgba(37,99,235,.08); }
+    .btn:focus-visible{ outline:none; box-shadow:0 0 0 4px var(--ring); }
+    .btn-primary{
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color:#fff;
+      box-shadow: 0 10px 18px rgba(37,99,235,.18);
+    }
+    .btn-primary:hover{ filter: brightness(1.02); }
+
+    /* Inputs */
+    .row{
+      display:flex; gap:10px; flex-wrap: wrap;
+      align-items:center;
+    }
+    .input{
+      flex: 1 1 260px;
+      min-width: 220px;
+      display:flex; align-items:center; gap:10px;
+      background: rgba(255,255,255,.85);
+      border:1px solid rgba(148,163,184,.25);
+      border-radius: 12px;
+      padding: 10px 12px;
+      box-shadow: var(--shadow-sm);
+    }
+    .input i{ color: var(--muted2); }
+    .input input, .input select{
+      border: none;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      color: var(--text);
+      font-weight: 750;
+      font-size: 13px;
+    }
+
+    /* Table */
+    table{
+      width:100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,.85);
+      border:1px solid rgba(148,163,184,.22);
+      border-radius: 14px;
+      overflow:hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    thead th{
+      text-align:left;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.12px;
+      color:#334155;
+      padding: 12px 12px;
+      background: rgba(37,99,235,.06);
+      border-bottom: 1px solid rgba(148,163,184,.22);
+    }
+    tbody td{
+      padding: 12px 12px;
+      border-bottom: 1px solid rgba(148,163,184,.14);
+      font-weight: 700;
+      color:#0f172a;
+      font-size: 13px;
+    }
+    tbody tr:hover{ background: rgba(37,99,235,.05); }
+    tbody tr:last-child td{ border-bottom:none; }
+
+    /* Chart container */
+    .chart{
+      height: 320px;
+      padding: 10px;
+    }
+    .chart canvas{ width:100% !important; height:100% !important; }
+
+    @media (max-width: 1100px){
+      .grid-3{ grid-template-columns: 1fr; }
+      .grid-2{ grid-template-columns: 1fr; }
+    }
     @media (max-width: 900px){
       .tabsbar{flex-direction:column; align-items:flex-start}
       .page-header h2{font-size:28px}
@@ -236,71 +375,499 @@
         </button>
       </div>
 
-      <div class="hint" id="hint">Astuce : utilise aussi les touches ← → (Enter/Espace)</div>
+      <div class="hint">Astuce : touches ← → + Enter/Espace • URL #page</div>
     </div>
 
-    <!-- PAGES -->
+    <!-- ===================== DASHBOARD ===================== -->
     <section id="page-dashboard" class="page active" role="tabpanel" aria-label="Dashboard">
-      <div class="grid-3">
-        <div class="mini-card">
-          <div class="mini-title">Fréquence cardiaque</div>
-          <div class="mini-value">72</div>
-          <div class="mini-sub">bpm (au repos)</div>
+      <div class="section-head">
+        <div>
+          <h3>Vue d’ensemble</h3>
+          <p>Résumé des métriques clés et alertes du jour.</p>
         </div>
-        <div class="mini-card">
-          <div class="mini-title">Hydratation</div>
-          <div class="mini-value">1.8L</div>
-          <div class="mini-sub">Objectif 2.5L</div>
+        <div class="row">
+          <span class="badge b-info"><i class="fas fa-circle-info"></i> Session active</span>
+          <button class="btn btn-primary" type="button"><i class="fas fa-plus"></i> Nouveau patient</button>
+          <button class="btn" type="button"><i class="fas fa-file-export"></i> Export</button>
         </div>
-        <div class="mini-card">
-          <div class="mini-title">Variabilité cardiaque</div>
-          <div class="mini-value">58 ms</div>
-          <div class="mini-sub">HRV moyen</div>
+      </div>
+
+      <div class="grid-auto">
+        <div class="card">
+          <div class="card-title"><i class="fas fa-heart"></i> Fréquence cardiaque</div>
+          <div class="big" id="kpiHr">72</div>
+          <div class="sub">bpm (au repos) • Dernière mesure: 08:30</div>
+          <div style="margin-top:10px">
+            <span class="badge b-good"><i class="fas fa-check"></i> Normal</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><i class="fas fa-wind"></i> Saturation O₂</div>
+          <div class="big" id="kpiSpo2">98%</div>
+          <div class="sub">SpO₂ moyenne • Dernière mesure: 08:30</div>
+          <div style="margin-top:10px">
+            <span class="badge b-good"><i class="fas fa-check"></i> Excellent</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><i class="fas fa-chart-line"></i> Variabilité cardiaque</div>
+          <div class="big" id="kpiHrv">58 ms</div>
+          <div class="sub">HRV moyen • Dernier calcul: 08:30</div>
+          <div style="margin-top:10px">
+            <span class="badge b-info"><i class="fas fa-wave-square"></i> Stable</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><i class="fas fa-droplet"></i> Glycémie</div>
+          <div class="big" id="kpiGly">5.8</div>
+          <div class="sub">mmol/L • À jeun</div>
+          <div style="margin-top:10px">
+            <span class="badge b-warn"><i class="fas fa-triangle-exclamation"></i> À surveiller</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px" class="grid-2">
+        <div class="card">
+          <div class="section-head" style="margin-bottom:10px">
+            <div>
+              <h3 style="font-size:16px">Tendances hebdomadaires</h3>
+              <p style="margin-top:2px">Aperçu sur 7 jours.</p>
+            </div>
+            <div class="row">
+              <span class="badge b-info"><i class="fas fa-calendar"></i> Semaine</span>
+            </div>
+          </div>
+          <div class="chart">
+            <canvas id="dashTrend"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-head" style="margin-bottom:10px">
+            <div>
+              <h3 style="font-size:16px">Événements récents</h3>
+              <p style="margin-top:2px">Alertes, actions, mesures.</p>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:10px">
+            <div class="row" style="justify-content:space-between">
+              <span class="badge b-bad"><i class="fas fa-bell"></i> Alerte</span>
+              <span class="sub">08:12</span>
+            </div>
+            <div style="margin-top:8px;font-weight:850">
+              Détection mouvement (PIR) – vérification requise.
+            </div>
+            <div class="sub" style="margin-top:6px">
+              Action recommandée : confirmer présence patient et relancer mesure.
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:10px">
+            <div class="row" style="justify-content:space-between">
+              <span class="badge b-good"><i class="fas fa-check"></i> Mesure</span>
+              <span class="sub">08:30</span>
+            </div>
+            <div style="margin-top:8px;font-weight:850">
+              SpO₂ 98% • BPM 72 • Qualité signal: bonne.
+            </div>
+            <div class="sub" style="margin-top:6px">
+              Capteur: MAX30102 • Fréquence d’échantillonnage: 400 Hz.
+            </div>
+          </div>
+
+          <div class="row">
+            <button class="btn" type="button"><i class="fas fa-clipboard-list"></i> Voir l’historique</button>
+            <button class="btn" type="button"><i class="fas fa-bell-slash"></i> Gérer les alertes</button>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- ===================== PATIENTS ===================== -->
     <section id="page-patients" class="page" role="tabpanel" aria-label="Patients">
-      <h3 style="font-size:18px;font-weight:950;margin-bottom:10px;">Patients</h3>
-      <p style="color:#475569;font-weight:650;">Ici tu peux ajouter la liste des patients, recherche, etc.</p>
-    </section>
+      <div class="section-head">
+        <div>
+          <h3>Patients</h3>
+          <p>Recherche, suivi et accès rapide aux dossiers.</p>
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" type="button"><i class="fas fa-user-plus"></i> Ajouter</button>
+          <button class="btn" type="button"><i class="fas fa-file-import"></i> Import</button>
+        </div>
+      </div>
 
-    <section id="page-capteurs" class="page" role="tabpanel" aria-label="Capteurs">
-      <h3 style="font-size:18px;font-weight:950;margin-bottom:10px;">Capteurs</h3>
-      <p style="color:#475569;font-weight:650;">
-        Ici tu peux afficher les valeurs temps réel (ex : SpO₂, BPM, présence PIR…).
-      </p>
-      <div style="margin-top:14px" class="grid-3">
-        <div class="mini-card">
-          <div class="mini-title">MAX30102</div>
-          <div class="mini-value">—</div>
-          <div class="mini-sub">SpO₂ / BPM</div>
+      <div class="row" style="margin-bottom:12px">
+        <div class="input">
+          <i class="fas fa-magnifying-glass"></i>
+          <input type="text" placeholder="Rechercher par nom, ID, téléphone..." />
         </div>
-        <div class="mini-card">
-          <div class="mini-title">PIR</div>
-          <div class="mini-value">—</div>
-          <div class="mini-sub">Présence</div>
+        <div class="input" style="flex:0 1 220px">
+          <i class="fas fa-filter"></i>
+          <select>
+            <option>Filtre: Tous</option>
+            <option>Dernière visite: 7 jours</option>
+            <option>Suivi requis</option>
+            <option>Alertes actives</option>
+          </select>
         </div>
-        <div class="mini-card">
-          <div class="mini-title">Échantillonnage</div>
-          <div class="mini-value">400 Hz</div>
-          <div class="mini-sub">Données brutes</div>
+        <div class="input" style="flex:0 1 220px">
+          <i class="fas fa-sort"></i>
+          <select>
+            <option>Trier: récent</option>
+            <option>Trier: nom (A-Z)</option>
+            <option>Trier: alertes</option>
+          </select>
+        </div>
+      </div>
+
+      <table aria-label="Table des patients">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>ID</th>
+            <th>Âge</th>
+            <th>Dernière mesure</th>
+            <th>Statut</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Marie Dubois</td>
+            <td>83947</td>
+            <td>42</td>
+            <td>14/01/2026 • 08:30</td>
+            <td><span class="badge b-good"><i class="fas fa-check"></i> Normal</span></td>
+            <td><button class="btn" type="button"><i class="fas fa-folder-open"></i> Ouvrir</button></td>
+          </tr>
+          <tr>
+            <td>Rachid Benali</td>
+            <td>12058</td>
+            <td>57</td>
+            <td>13/01/2026 • 17:05</td>
+            <td><span class="badge b-warn"><i class="fas fa-triangle-exclamation"></i> Suivi</span></td>
+            <td><button class="btn" type="button"><i class="fas fa-folder-open"></i> Ouvrir</button></td>
+          </tr>
+          <tr>
+            <td>Camille Laurent</td>
+            <td>77412</td>
+            <td>34</td>
+            <td>12/01/2026 • 09:10</td>
+            <td><span class="badge b-info"><i class="fas fa-circle-info"></i> Planifié</span></td>
+            <td><button class="btn" type="button"><i class="fas fa-folder-open"></i> Ouvrir</button></td>
+          </tr>
+          <tr>
+            <td>Jean Martin</td>
+            <td>44590</td>
+            <td>66</td>
+            <td>11/01/2026 • 15:22</td>
+            <td><span class="badge b-bad"><i class="fas fa-bell"></i> Alerte</span></td>
+            <td><button class="btn" type="button"><i class="fas fa-folder-open"></i> Ouvrir</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="row" style="margin-top:12px; justify-content:space-between">
+        <div class="sub">Affichage: 4 patients • Page 1/1</div>
+        <div class="row">
+          <button class="btn" type="button"><i class="fas fa-chevron-left"></i> Précédent</button>
+          <button class="btn" type="button">Suivant <i class="fas fa-chevron-right"></i></button>
         </div>
       </div>
     </section>
 
-    <section id="page-rapports" class="page" role="tabpanel" aria-label="Rapports">
-      <h3 style="font-size:18px;font-weight:950;margin-bottom:10px;">Rapports</h3>
-      <p style="color:#475569;font-weight:650;">Ici tu peux mettre les PDF, historiques, exports…</p>
+    <!-- ===================== CAPTEURS ===================== -->
+    <section id="page-capteurs" class="page" role="tabpanel" aria-label="Capteurs">
+      <div class="section-head">
+        <div>
+          <h3>Capteurs</h3>
+          <p>État, diagnostic et lecture instantanée des modules.</p>
+        </div>
+        <div class="row">
+          <span class="badge b-info"><i class="fas fa-microchip"></i> Raspberry Pi 4</span>
+          <span class="badge b-info"><i class="fas fa-wave-square"></i> 400 Hz</span>
+          <button class="btn btn-primary" type="button" id="btnStartDemo">
+            <i class="fas fa-play"></i> Démo temps réel
+          </button>
+          <button class="btn" type="button" id="btnStopDemo">
+            <i class="fas fa-stop"></i> Stop
+          </button>
+        </div>
+      </div>
+
+      <div class="grid-auto">
+        <div class="card">
+          <div class="card-title"><i class="fas fa-heartbeat"></i> MAX30102</div>
+          <div class="big"><span id="spo2Now">98</span>%</div>
+          <div class="sub">SpO₂ instantanée</div>
+          <div style="margin-top:10px" class="row">
+            <span class="badge b-good" id="maxStatus"><i class="fas fa-check"></i> Connecté</span>
+            <span class="badge b-info"><i class="fas fa-signal"></i> Signal: bon</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><i class="fas fa-heart"></i> Fréquence cardiaque</div>
+          <div class="big"><span id="bpmNow">72</span> bpm</div>
+          <div class="sub">BPM instantané (filtré)</div>
+          <div style="margin-top:10px" class="row">
+            <span class="badge b-good"><i class="fas fa-check"></i> Normal</span>
+            <span class="badge b-info"><i class="fas fa-clock"></i> MAJ: <span id="tick">—</span></span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><i class="fas fa-person-walking"></i> PIR (Présence)</div>
+          <div class="big" id="pirNow">Aucune</div>
+          <div class="sub">Détection mouvement</div>
+          <div style="margin-top:10px" class="row">
+            <span class="badge b-info"><i class="fas fa-bolt"></i> 5V</span>
+            <span class="badge b-info"><i class="fas fa-circle-info"></i> Mode: digital</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:14px" class="grid-2">
+        <div class="card">
+          <div class="section-head" style="margin-bottom:10px">
+            <div>
+              <h3 style="font-size:16px">Signal (démo)</h3>
+              <p style="margin-top:2px">Courbe simple type “flux capteur”.</p>
+            </div>
+            <span class="badge b-info"><i class="fas fa-wave-square"></i> Live</span>
+          </div>
+          <div class="chart">
+            <canvas id="sensorChart"></canvas>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-head" style="margin-bottom:10px">
+            <div>
+              <h3 style="font-size:16px">Diagnostic rapide</h3>
+              <p style="margin-top:2px">Checklist & actions.</p>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:10px">
+            <div class="row" style="justify-content:space-between">
+              <div style="font-weight:900">Qualité signal MAX30102</div>
+              <span class="badge b-good"><i class="fas fa-check"></i> OK</span>
+            </div>
+            <div class="sub" style="margin-top:6px">
+              Conseil : fixer le capteur et réduire la lumière parasite.
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:10px">
+            <div class="row" style="justify-content:space-between">
+              <div style="font-weight:900">PIR : seuil & placement</div>
+              <span class="badge b-info"><i class="fas fa-circle-info"></i> À ajuster</span>
+            </div>
+            <div class="sub" style="margin-top:6px">
+              Conseil : éviter sources de chaleur et mouvements parasites.
+            </div>
+          </div>
+
+          <div class="row">
+            <button class="btn" type="button"><i class="fas fa-rotate"></i> Recalibrer</button>
+            <button class="btn" type="button"><i class="fas fa-file-lines"></i> Logs</button>
+            <button class="btn" type="button"><i class="fas fa-screwdriver-wrench"></i> Configuration</button>
+          </div>
+        </div>
+      </div>
     </section>
 
+    <!-- ===================== RAPPORTS ===================== -->
+    <section id="page-rapports" class="page" role="tabpanel" aria-label="Rapports">
+      <div class="section-head">
+        <div>
+          <h3>Rapports</h3>
+          <p>Documents, historiques et exports.</p>
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" type="button"><i class="fas fa-file-circle-plus"></i> Générer</button>
+          <button class="btn" type="button"><i class="fas fa-upload"></i> Importer</button>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="section-head" style="margin-bottom:10px">
+            <div>
+              <h3 style="font-size:16px">Fichiers récents</h3>
+              <p style="margin-top:2px">Derniers rapports générés.</p>
+            </div>
+          </div>
+
+          <table aria-label="Rapports récents">
+            <thead>
+              <tr>
+                <th>Fichier</th>
+                <th>Date</th>
+                <th>Taille</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Rapport_Vitaux_83947.pdf</td>
+                <td>14/01/2026</td>
+                <td>2.1 MB</td>
+                <td><span class="badge b-good"><i class="fas fa-check"></i> Prêt</span></td>
+              </tr>
+              <tr>
+                <td>Historique_Capteurs_83947.csv</td>
+                <td>14/01/2026</td>
+                <td>820 KB</td>
+                <td><span class="badge b-info"><i class="fas fa-circle-info"></i> Export</span></td>
+              </tr>
+              <tr>
+                <td>CompteRendu_Consultation.docx</td>
+                <td>13/01/2026</td>
+                <td>410 KB</td>
+                <td><span class="badge b-warn"><i class="fas fa-triangle-exclamation"></i> À valider</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="row" style="margin-top:12px">
+            <button class="btn" type="button"><i class="fas fa-download"></i> Télécharger</button>
+            <button class="btn" type="button"><i class="fas fa-share-nodes"></i> Partager</button>
+            <button class="btn" type="button"><i class="fas fa-trash"></i> Supprimer</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-head" style="margin-bottom:10px">
+            <div>
+              <h3 style="font-size:16px">Aperçu (démo)</h3>
+              <p style="margin-top:2px">Évolution pression artérielle.</p>
+            </div>
+            <span class="badge b-info"><i class="fas fa-calendar"></i> 5 points</span>
+          </div>
+          <div class="chart">
+            <canvas id="bpChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SETTINGS ===================== -->
     <section id="page-settings" class="page" role="tabpanel" aria-label="Paramètres">
-      <h3 style="font-size:18px;font-weight:950;margin-bottom:10px;">Paramètres</h3>
-      <p style="color:#475569;font-weight:650;">Ici tu peux mettre la configuration (alertes, seuils, compte, etc.).</p>
+      <div class="section-head">
+        <div>
+          <h3>Paramètres</h3>
+          <p>Seuils, alertes et préférences interface.</p>
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" type="button"><i class="fas fa-floppy-disk"></i> Enregistrer</button>
+          <button class="btn" type="button"><i class="fas fa-rotate-left"></i> Réinitialiser</button>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title"><i class="fas fa-bell"></i> Alertes</div>
+
+          <div style="margin-top:12px" class="row">
+            <span class="badge b-info"><i class="fas fa-heart"></i> BPM</span>
+            <div class="input" style="flex:1 1 220px">
+              <i class="fas fa-arrow-down"></i>
+              <input type="number" value="50" />
+            </div>
+            <div class="input" style="flex:1 1 220px">
+              <i class="fas fa-arrow-up"></i>
+              <input type="number" value="120" />
+            </div>
+          </div>
+
+          <div style="margin-top:10px" class="row">
+            <span class="badge b-info"><i class="fas fa-wind"></i> SpO₂</span>
+            <div class="input" style="flex:1 1 220px">
+              <i class="fas fa-arrow-down"></i>
+              <input type="number" value="92" />
+            </div>
+            <div class="input" style="flex:1 1 220px">
+              <i class="fas fa-arrow-up"></i>
+              <input type="number" value="100" />
+            </div>
+          </div>
+
+          <div style="margin-top:10px" class="row">
+            <span class="badge b-info"><i class="fas fa-person-walking"></i> PIR</span>
+            <div class="input" style="flex:1 1 260px">
+              <i class="fas fa-toggle-on"></i>
+              <select>
+                <option>Actif</option>
+                <option>Inactif</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="sub" style="margin-top:10px">
+            Ces valeurs sont des exemples. Elles devront correspondre à tes règles réelles.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title"><i class="fas fa-display"></i> Interface</div>
+
+          <div style="margin-top:12px" class="row">
+            <div class="input">
+              <i class="fas fa-language"></i>
+              <select>
+                <option>Langue : Français</option>
+                <option>English</option>
+              </select>
+            </div>
+            <div class="input">
+              <i class="fas fa-palette"></i>
+              <select>
+                <option>Thème : Clair</option>
+                <option>Sombre (démo)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="margin-top:10px" class="row">
+            <div class="input">
+              <i class="fas fa-arrows-up-down-left-right"></i>
+              <select>
+                <option>Layout : Compact</option>
+                <option>Confort</option>
+              </select>
+            </div>
+            <div class="input">
+              <i class="fas fa-shield-halved"></i>
+              <select>
+                <option>Sécurité : Standard</option>
+                <option>Renforcée</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:12px">
+            <div class="row" style="justify-content:space-between">
+              <div style="font-weight:950">Statut système</div>
+              <span class="badge b-good"><i class="fas fa-check"></i> OK</span>
+            </div>
+            <div class="sub" style="margin-top:6px">
+              Dernière synchronisation : 14/01/2026 • 08:35
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
   <script>
+    // ===================== NAVIGATION (tabs) =====================
     const tabs = Array.from(document.querySelectorAll('.tab'));
     const pages = Array.from(document.querySelectorAll('.page'));
     const indicator = document.getElementById('tabIndicator');
@@ -310,35 +877,24 @@
     }
 
     function moveIndicatorTo(tabEl){
-      // position relative à .tabs
       const tabsWrap = tabEl.parentElement;
       const tabRect = tabEl.getBoundingClientRect();
       const wrapRect = tabsWrap.getBoundingClientRect();
-
       const left = tabRect.left - wrapRect.left;
       indicator.style.width = tabRect.width + 'px';
       indicator.style.transform = 'translateX(' + left + 'px)';
     }
 
     function setActive(pageName, pushHash = true){
-      // pages
       pages.forEach(p => p.classList.toggle('active', p.id === 'page-' + pageName));
+      tabs.forEach(t => t.setAttribute('aria-selected', (t.dataset.page === pageName) ? 'true' : 'false'));
 
-      // tabs + aria
-      tabs.forEach(t => {
-        const isActive = t.dataset.page === pageName;
-        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
-      });
-
-      // indicator
       const activeTab = tabs.find(t => t.dataset.page === pageName);
       if (activeTab) moveIndicatorTo(activeTab);
 
-      // URL hash
       if (pushHash) history.replaceState(null, '', '#' + pageName);
     }
 
-    // Click navigation
     tabs.forEach(t => {
       t.addEventListener('click', () => setActive(t.dataset.page));
       t.addEventListener('keydown', (e) => {
@@ -349,7 +905,6 @@
       });
     });
 
-    // Keyboard navigation ← →
     document.addEventListener('keydown', (e) => {
       if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
 
@@ -364,18 +919,180 @@
       setActive(tabs[next].dataset.page);
     });
 
-    // Initial load from hash
     function init(){
       const initial = (location.hash || '#dashboard').replace('#','');
       const exists = pages.some(p => p.id === 'page-' + initial);
       setActive(exists ? initial : 'dashboard', false);
 
-      // Ensure indicator placed after layout
       requestAnimationFrame(() => moveIndicatorTo(getActiveTab()));
       window.addEventListener('resize', () => moveIndicatorTo(getActiveTab()));
     }
 
+    // ===================== CHARTS (démo) =====================
+    let dashTrendChart = null;
+    let sensorChart = null;
+    let bpChart = null;
+
+    function buildCharts(){
+      // Dashboard trend (demo)
+      const dashCtx = document.getElementById('dashTrend')?.getContext('2d');
+      if (dashCtx) {
+        dashTrendChart = new Chart(dashCtx, {
+          type: 'line',
+          data: {
+            labels: ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'],
+            datasets: [
+              { label: 'BPM', data: [68,72,70,75,71,73,72], borderColor:'#dc2626', backgroundColor:'rgba(220,38,38,.08)', fill:true, tension:.35, borderWidth:2, pointRadius:3 },
+              { label: 'SpO₂', data: [97,98,98,97,98,99,98], borderColor:'#2563eb', backgroundColor:'rgba(37,99,235,.06)', fill:true, tension:.35, borderWidth:2, pointRadius:3 }
+            ]
+          },
+          options: {
+            responsive:true, maintainAspectRatio:false,
+            plugins:{ legend:{ display:true, position:'bottom', labels:{ color:'#334155', font:{weight:'700'} } } },
+            scales:{
+              x:{ grid:{ color:'rgba(148,163,184,.25)' }, ticks:{ color:'#475569', font:{weight:'600'} } },
+              y:{ grid:{ color:'rgba(148,163,184,.25)' }, ticks:{ color:'#475569', font:{weight:'600'} } }
+            }
+          }
+        });
+      }
+
+      // Sensor chart (demo)
+      const sCtx = document.getElementById('sensorChart')?.getContext('2d');
+      if (sCtx) {
+        const labels = Array.from({length: 30}, (_,i)=> i-29);
+        sensorChart = new Chart(sCtx, {
+          type:'line',
+          data:{
+            labels,
+            datasets:[{
+              label:'Signal',
+              data: labels.map(()=> 0),
+              borderColor:'#4f46e5',
+              backgroundColor:'rgba(79,70,229,.08)',
+              fill:true,
+              tension:.35,
+              borderWidth:2,
+              pointRadius:0
+            }]
+          },
+          options:{
+            responsive:true, maintainAspectRatio:false,
+            plugins:{ legend:{ display:false } },
+            scales:{
+              x:{ display:false },
+              y:{ grid:{ color:'rgba(148,163,184,.25)' }, ticks:{ color:'#475569', font:{weight:'600'} } }
+            }
+          }
+        });
+      }
+
+      // BP chart (demo)
+      const bpCtx = document.getElementById('bpChart')?.getContext('2d');
+      if (bpCtx) {
+        bpChart = new Chart(bpCtx, {
+          type:'line',
+          data:{
+            labels:['05 Jan','08 Jan','10 Jan','12 Jan','14 Jan'],
+            datasets:[
+              { label:'Systolique', data:[118,122,120,119,120], borderColor:'#dc2626', backgroundColor:'rgba(220,38,38,.06)', fill:true, tension:.35, borderWidth:2, pointRadius:3 },
+              { label:'Diastolique', data:[78,82,80,79,80], borderColor:'#2563eb', backgroundColor:'rgba(37,99,235,.06)', fill:true, tension:.35, borderWidth:2, pointRadius:3 }
+            ]
+          },
+          options:{
+            responsive:true, maintainAspectRatio:false,
+            plugins:{ legend:{ display:true, position:'bottom', labels:{ color:'#334155', font:{weight:'700'} } } },
+            scales:{
+              x:{ grid:{ color:'rgba(148,163,184,.25)' }, ticks:{ color:'#475569', font:{weight:'600'} } },
+              y:{ grid:{ color:'rgba(148,163,184,.25)' }, ticks:{ color:'#475569', font:{weight:'600'} } }
+            }
+          }
+        });
+      }
+    }
+
+    // ===================== CAPTEURS (démo temps réel) =====================
+    let demoTimer = null;
+    let demoT = 0;
+
+    function setBadge(el, mode){
+      if (!el) return;
+      el.classList.remove('b-good','b-warn','b-bad','b-info');
+      if (mode === 'good') el.classList.add('b-good');
+      else if (mode === 'warn') el.classList.add('b-warn');
+      else if (mode === 'bad') el.classList.add('b-bad');
+      else el.classList.add('b-info');
+    }
+
+    function startDemo(){
+      stopDemo();
+
+      demoTimer = setInterval(() => {
+        demoT++;
+
+        // BPM / SpO2 (fake but smooth)
+        const bpm = Math.round(70 + 6*Math.sin(demoT/6) + 2*Math.sin(demoT/2.2));
+        const spo2 = Math.round(97 + 1.2*Math.sin(demoT/8) + 0.6*Math.sin(demoT/3.7));
+
+        document.getElementById('bpmNow').textContent = bpm;
+        document.getElementById('spo2Now').textContent = spo2;
+
+        // Dashboard KPIs mirror (demo)
+        const kpiHr = document.getElementById('kpiHr');
+        const kpiSpo2 = document.getElementById('kpiSpo2');
+        if (kpiHr) kpiHr.textContent = bpm;
+        if (kpiSpo2) kpiSpo2.textContent = spo2 + '%';
+
+        // PIR random events
+        const pir = (Math.random() < 0.08) ? 'Mouvement détecté' : 'Aucune';
+        const pirEl = document.getElementById('pirNow');
+        if (pirEl) pirEl.textContent = pir;
+
+        // Tick
+        const now = new Date();
+        const hh = String(now.getHours()).padStart(2,'0');
+        const mm = String(now.getMinutes()).padStart(2,'0');
+        const ss = String(now.getSeconds()).padStart(2,'0');
+        const tick = document.getElementById('tick');
+        if (tick) tick.textContent = `${hh}:${mm}:${ss}`;
+
+        // Status badge (demo)
+        const maxStatus = document.getElementById('maxStatus');
+        if (maxStatus) {
+          if (spo2 < 93) { maxStatus.innerHTML = '<i class="fas fa-triangle-exclamation"></i> Qualité moyenne'; setBadge(maxStatus,'warn'); }
+          else { maxStatus.innerHTML = '<i class="fas fa-check"></i> Connecté'; setBadge(maxStatus,'good'); }
+        }
+
+        // Update sensor chart (fake signal)
+        if (sensorChart) {
+          const ds = sensorChart.data.datasets[0].data;
+          const last = ds[ds.length - 1] || 0;
+          const next = last * 0.85 + (Math.random() * 2 - 1) * 3 + 2*Math.sin(demoT/5);
+          ds.push(next);
+          ds.shift();
+          sensorChart.update('none');
+        }
+
+      }, 500);
+    }
+
+    function stopDemo(){
+      if (demoTimer) clearInterval(demoTimer);
+      demoTimer = null;
+    }
+
+    // Buttons
+    function bindDemoButtons(){
+      const startBtn = document.getElementById('btnStartDemo');
+      const stopBtn = document.getElementById('btnStopDemo');
+      if (startBtn) startBtn.addEventListener('click', startDemo);
+      if (stopBtn) stopBtn.addEventListener('click', stopDemo);
+    }
+
+    // Init
     init();
+    buildCharts();
+    bindDemoButtons();
   </script>
 </body>
 </html>
